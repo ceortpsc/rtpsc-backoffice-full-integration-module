@@ -3,12 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ross Tax Pro — Master Logistics & WMR Engine</title>
+    <title>Ross Tax Pro — Master Transcript Ledger</title>
     <style>
         :root {
             --navy: #0F2C59;
             --gold: #DAC0A3;
-            --cream: #F8F0E5;
             --slate: #1F2937;
             --border: #E5E7EB;
             --green: #065F46;
@@ -22,10 +21,7 @@
             margin: 0;
             padding: 20px;
         }
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-        }
+        .container { max-width: 1500px; margin: 0 auto; }
         header {
             background-color: var(--navy);
             color: white;
@@ -36,78 +32,8 @@
             justify-content: space-between;
             align-items: center;
         }
-        header h1 { margin: 0; font-size: 18pt; letter-spacing: 0.5px; }
+        header h1 { margin: 0; font-size: 16pt; text-transform: uppercase; }
         header p { margin: 5px 0 0 0; color: var(--gold); font-size: 9.5pt; font-weight: bold; }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 15px;
-            margin-bottom: 25px;
-        }
-        .stat-card {
-            background: white;
-            padding: 15px 20px;
-            border-radius: 6px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-            border-left: 4px solid var(--gold);
-        }
-        .stat-card.critical { border-left-color: var(--red); }
-        .stat-card.success { border-left-color: var(--green); }
-        .stat-label { font-size: 8pt; text-transform: uppercase; color: #64748B; font-weight: bold; }
-        .stat-value { font-size: 16pt; font-weight: 800; color: var(--navy); margin-top: 5px; }
-
-        .wmr-box {
-            background: white;
-            padding: 25px;
-            border-radius: 8px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-            margin-bottom: 25px;
-            border: 1px solid var(--border);
-        }
-        .wmr-title { color: var(--navy); margin-top: 0; font-size: 13pt; text-transform: uppercase; border-bottom: 2px solid #F1F5F9; padding-bottom: 10px; }
-
-        .progress-tracker {
-            display: flex;
-            justify-content: space-between;
-            margin: 25px 0;
-            position: relative;
-        }
-        .progress-tracker::before {
-            content: '';
-            position: absolute;
-            top: 15px; left: 0; right: 0;
-            height: 4px; background: #E2E8F0;
-            z-index: 1;
-        }
-        .progress-bar-fill {
-            position: absolute;
-            top: 15px; left: 0; width: 0%;
-            height: 4px; background: var(--green);
-            z-index: 2;
-            transition: width 0.4s ease;
-        }
-        .step {
-            position: relative;
-            z-index: 3;
-            background: white;
-            padding: 0 10px;
-            text-align: center;
-            flex: 1;
-        }
-        .circle {
-            width: 32px; height: 32px;
-            border-radius: 50%;
-            background: #E2E8F0;
-            margin: 0 auto 8px auto;
-            display: flex; align-items: center; justify-content: center;
-            font-weight: bold; font-size: 10pt; color: #64748B;
-            border: 2px solid white;
-        }
-        .step.active .circle { background: var(--navy); color: white; }
-        .step.completed .circle { background: var(--green); color: white; }
-        .step.hold .circle { background: var(--red); color: white; }
-        .step-label { font-size: 8.5pt; font-weight: 600; color: #475569; }
 
         .table-section {
             background: white;
@@ -115,100 +41,32 @@
             border-radius: 8px;
             box-shadow: 0 1px 3px rgba(0,0,0,0.05);
             overflow-x: auto;
-            margin-bottom: 25px;
         }
         .matrix-table { width: 100%; border-collapse: collapse; font-size: 9pt; text-align: left; }
-        .matrix-table th { background: var(--navy); color: white; padding: 12px; font-weight: 600; font-size: 7.5pt; text-transform: uppercase; letter-spacing: 0.5px; }
+        .matrix-table th { background: var(--navy); color: white; padding: 12px; font-weight: 600; font-size: 8pt; text-transform: uppercase; }
         .matrix-table td { padding: 10px 12px; border-bottom: 1px solid var(--border); }
         .matrix-table tr:nth-child(even) { background: #F8FAFC; }
-        .matrix-table tr:hover { background: #F1F5F9; cursor: pointer; }
 
-        .badge { padding: 3px 6px; font-size: 7pt; font-weight: bold; border-radius: 3px; text-transform: uppercase; }
-        .badge-red { background: #FEE2E2; color: var(--red); }
+        .badge { padding: 3px 6px; font-size: 7.5pt; font-weight: bold; border-radius: 3px; text-transform: uppercase; }
         .badge-green { background: #D1FAE5; color: var(--green); }
-
-        select { padding: 8px 12px; width: 100%; max-width: 400px; border-radius: 4px; border: 1px solid var(--border); font-weight: 600; color: var(--navy); }
-        
-        .irm-card {
-            background: #FFFDF5;
-            border: 1px solid #FCD34D;
-            border-left: 4px solid #D97706;
-            padding: 20px;
-            border-radius: 6px;
-            margin-top: 20px;
-            font-size: 9.5pt;
-        }
-        .irm-card h4 { margin-top: 0; color: #92400E; text-transform: uppercase; font-size: 10pt; letter-spacing: 0.5px; }
-        .irm-card ul { margin: 10px 0 0 0; padding-left: 20px; }
-        .irm-card li { margin-bottom: 6px; line-height: 1.4; }
+        .badge-amber { background: #FEF3C7; color: var(--amber); }
+        .badge-red { background: #FEE2E2; color: var(--red); }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
             <div>
-                <h1>Ross Tax Pro — Master Enterprise Logistics Core</h1>
-                <p>EFIN Core System Module Registry Platform • Data Snap: May 31, 2026</p>
+                <h1>Ross Tax Pro — Master Transcript Ledger</h1>
+                <p>Tax Year 2025 Account Transcripts System Pipeline Verification Module</p>
             </div>
             <div style="text-align: right; font-size: 8.5pt;">
-                <strong>Office ID:</strong> 48335<br>
-                <strong>Location:</strong> Killeen, TX
+                <strong>EFIN Registry:</strong> 748335<br>
+                <strong>System Date:</strong> May 31, 2026
             </div>
         </header>
 
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-label">Total Ingested Portfolio</div>
-                <div class="stat-value">31 Active Files</div>
-            </div>
-            <div class="stat-card critical">
-                <div class="stat-label">TC 570 Processing Freeze</div>
-                <div class="stat-value">6 Accounts</div>
-            </div>
-            <div class="stat-card success">
-                <div class="stat-label">TC 846 Refund Approved</div>
-                <div class="stat-value">25 Accounts</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-label">Gross Value Outstanding</div>
-                <div class="stat-value" style="color: var(--green);">$319,252.00</div>
-            </div>
-        </div>
-
-        <div class="wmr-box">
-            <h3 class="wmr-title">Interactive Customer Face Portal (WMR Module Lookup Emulator)</h3>
-            <div class="select-wrapper" style="margin-bottom: 20px;">
-                <label style="font-size: 9pt; font-weight: bold; display: block; margin-bottom: 5px; color: #475569;">Select Active Taxpayer Account Profile:</label>
-                <select id="taxpayerSelector" onchange="updateWmrTracker()">
-                    <option value="0">CONDRE D ROSS (Ref: RLCJEJJSI3TAXQTHT)</option>
-                    <option value="1">TASIA M PERKINS (Ref: RN66RFJPXAHFJBCPZ)</option>
-                    <option value="2">RODGERICK A ARMSTEAD (Ref: RWBCGCT24DCIPQRHY)</option>
-                    <option value="3">MIGUEL A ROJAS (Ref: RKK24AF24YS3NC3HW)</option>
-                    <option value="4">JOURDAN RODRIGUEZ (Ref: RUBGWLQHVV6YHDJQ3)</option>
-                </select>
-            </div>
-
-            <div class="progress-tracker">
-                <div class="progress-bar-fill" id="barFill"></div>
-                <div class="step" id="step1">
-                    <div class="circle">1</div>
-                    <div class="step-label">Return Received<br><span style="font-size:7pt; font-weight:normal;" id="lblAck"></span></div>
-                </div>
-                <div class="step" id="step2">
-                    <div class="circle">2</div>
-                    <div class="step-label" id="lblStage2Name">Standard Processing</div>
-                </div>
-                <div class="step" id="step3">
-                    <div class="circle">3</div>
-                    <div class="step-label">Disbursement Issued<br><span style="font-size:7pt; font-weight:bold; color: var(--green);" id="lblDisb"></span></div>
-                </div>
-            </div>
-
-            <div id="wmrMessage" style="background: #F8FAFC; padding: 15px; border-radius: 6px; font-size: 9.5pt; border-left: 4px solid var(--navy); line-height: 1.4; margin-bottom: 15px;"></div>
-        </div>
-
         <div class="table-section">
-            <h3 class="wmr-title" style="border: none; margin-bottom: 15px;">Master Logistics & Refund Overview Ledger Report</h3>
             <table class="matrix-table">
                 <thead>
                     <tr>
@@ -227,16 +85,58 @@
                 <tbody id="tableBody"></tbody>
             </table>
         </div>
-
-        <div class="irm-card">
-            <h4>⚠️ IRM Operational Guidance & Next Action Protocols (Internal Office Resource)</h4>
-            <ul>
-                <li><strong>TC 570 Resolution Blueprint:</strong> Accounts flagged under Transaction Code 570 require systemic verification matching against internal database transcript indices before release criteria can execute.</li>
-                <li><strong>CP05 Notice Window:</strong> Notices issued on 02/16/2026 are subject to a strict processing timeline window under standard IRM review provisions. Do not re-transmit electronic files if already acknowledged.</li>
-                <li><strong>Fee Settle Ingestion Parameters:</strong> Ensure local bank routing files match gross outstanding pipeline values exactly before running nightly ledger synchronization runs.</li>
-            </ul>
-        </div>
     </div>
 
     <script>
-        const clientDataset =
+        const clients = [
+            { id: "01", name: "CONDRE D ROSS", ack: "01/21/2026", exp: "02/11/2026", app: "N/A", sent: "N/A", gross: "$15,021.00", fees: "$1,996.19", code: "TC 570/971", stage: "Critical Hold", cls: "badge-red" },
+            { id: "02", name: "TASIA M PERKINS", ack: "01/16/2026", exp: "02/06/2026", app: "N/A", sent: "N/A", gross: "$7,194.00", fees: "$1,683.53", code: "TC 570", stage: "Critical Hold", cls: "badge-red" },
+            { id: "03", name: "RODGERICK A ARMSTEAD", ack: "01/20/2026", exp: "02/10/2026", app: "N/A", sent: "N/A", gross: "$14,962.00", fees: "$2,702.10", code: "TC 570", stage: "Critical Hold", cls: "badge-red" },
+            { id: "04", name: "MIGUEL A ROJAS", ack: "01/20/2026", exp: "02/10/2026", app: "N/A", sent: "N/A", gross: "$9,897.00", fees: "$2,320.91", code: "TC 570", stage: "Critical Hold", cls: "badge-red" },
+            { id: "05", name: "JOURDAN RODRIGUEZ", ack: "05/18/2026", exp: "06/08/2026", app: "05/28/2026", sent: "06/02/2026", gross: "$9,053.00", fees: "$450.00", code: "TC 846", stage: "Approved", cls: "badge-green" }
+        ];
+
+        const remainingNames = [
+            "CHRISTWELL MATHES", "JAMIE WILLIAMS", "NIOMI M MEDINA", "AARON A PORTER", "THAERON L ROBINSON",
+            "BENZEL L PERKINS", "PEGGY D DUNCAN", "CHRISTOPHER DINNON", "JACQUES QUINNINE", "DELINO D NELSON",
+            "CHARLES LUTHER", "MICHAEL AKERS", "JOVAN HARPER", "TRAVIS J YOUNG", "JAZZMIN PORTER",
+            "LAMONT C BROWN", "AMARI M DUNBAR", "TYCIANA N MATTHEWS", "ASHLEY N CONTRERAS", "GISELLE TURNAGE",
+            "OMARI O BRATHWAITE", "CHRISTOPHER L BROWN", "BRYAN M ROVISO", "KYARA MCWILLIAMS", "TAYLOR SHEPARD", "IAN F PRATER"
+        ];
+
+        remainingNames.forEach((name, i) => {
+            clients.push({
+                id: (i + 6).toString().padStart(2, '0'),
+                name: name,
+                ack: "Pending",
+                exp: "Pending",
+                app: "N/A",
+                sent: "N/A",
+                gross: "Reviewing",
+                fees: "$350.00",
+                code: "Processing",
+                stage: "In Queue",
+                cls: "badge-amber"
+            });
+        });
+
+        const tbody = document.getElementById('tableBody');
+        clients.forEach(c => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td style="font-weight: bold; text-align: center;">${c.id}</td>
+                <td style="font-weight: bold; color: var(--navy);">${c.name}</td>
+                <td>${c.ack}</td>
+                <td>${c.exp}</td>
+                <td>${c.app}</td>
+                <td style="font-weight: bold;">${c.sent}</td>
+                <td style="font-weight: bold;">${c.gross}</td>
+                <td>${c.fees}</td>
+                <td><code>${c.code}</code></td>
+                <td><span class="badge ${c.cls}">${c.stage}</span></td>
+            `;
+            tbody.appendChild(tr);
+        });
+    </script>
+</body>
+</html>
