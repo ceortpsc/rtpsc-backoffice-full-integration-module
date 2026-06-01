@@ -1,1 +1,7 @@
 production_transmission_ledger.log
+node_modules/
+package-lock.json
+*.json
+TDS_Bulk_Audit_Cache/
+TDS_Bulk_Audit_Cache_TY2025/
+reports/
