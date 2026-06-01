@@ -1,15 +1,1 @@
-
-# Credentials and Local System Variables
-.env
-.env.production
-*.env
-
-# System Logs & Caches
-node_modules/
-package-lock.json
-TDS_Bulk_Audit_Cache/
-TDS_Bulk_Audit_Cache_TY2025/
-
-# Large Local Data Extracts
-*.json
-reports/
+production_transmission_ledger.log
