@@ -23,6 +23,7 @@ const { BRAND_ASSETS } = require('./config/brand-assets');
 const { SELF_HEALING_WORKER } = require('./config/self-healing-worker');
 const { AWS_DEPLOYMENT } = require('./config/aws-deployment');
 const { NEXT_DASHBOARD_MODULES } = require('./config/next-dashboard-modules');
+const { CLOUDFLARE_WORKER } = require('./config/cloudflare-worker');
 
 const CONFIG = {
     redisHost: '127.0.0.1',
@@ -53,7 +54,8 @@ const CONFIG = {
     brandAssets: BRAND_ASSETS,
     selfHealingWorker: SELF_HEALING_WORKER,
     awsDeployment: AWS_DEPLOYMENT,
-    nextDashboardModules: NEXT_DASHBOARD_MODULES
+    nextDashboardModules: NEXT_DASHBOARD_MODULES,
+    cloudflareWorker: CLOUDFLARE_WORKER
 };
 
 if (!fs.existsSync(CONFIG.exportDirectory)) {
@@ -150,6 +152,17 @@ const trackingEnvelope = {
         amplify: CONFIG.awsDeployment.amplify,
         packaging: CONFIG.awsDeployment.packaging,
         safeguards: CONFIG.awsDeployment.safeguards
+    },
+    cloudflareWorker: {
+        version: CONFIG.cloudflareWorker.version,
+        workerName: CONFIG.cloudflareWorker.workerName,
+        posture: CONFIG.cloudflareWorker.posture,
+        wranglerConfig: CONFIG.cloudflareWorker.wranglerConfig,
+        entrypoint: CONFIG.cloudflareWorker.entrypoint,
+        routes: CONFIG.cloudflareWorker.routes,
+        bindings: CONFIG.cloudflareWorker.bindings,
+        commands: CONFIG.cloudflareWorker.commands,
+        guardrails: CONFIG.cloudflareWorker.guardrails
     },
     nextDashboard: {
         version: CONFIG.nextDashboardModules.version,
@@ -417,6 +430,10 @@ function createApiPayload(pathname) {
 
     if (pathname === "/next-dashboard") {
         return CONFIG.nextDashboardModules;
+    }
+
+    if (pathname === "/cloudflare-worker") {
+        return CONFIG.cloudflareWorker;
     }
 
     if (pathname === "/auth") {

@@ -1,0 +1,14 @@
+name = "rtpsc-backoffice-worker"
+main = "cloudflare/worker.mjs"
+compatibility_date = "2026-06-19"
+workers_dev = true
+
+[vars]
+ENVIRONMENT = "staging"
+RTPSC_RUNTIME = "review-gated"
+
+[observability]
+enabled = true
+
+[placement]
+mode = "smart"

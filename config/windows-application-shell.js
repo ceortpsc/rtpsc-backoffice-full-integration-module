@@ -29,7 +29,7 @@ const WINDOWS_APPLICATION_SHELL = {
         redirectUris: ["https://etrac.rosstaxsoftware.com/oauth/callback", "http://localhost:8787/oauth/callback"],
         scopes: ["openid", "profile", "email", "jobs:read", "jobs:stage", "ledgers:review", "transmittals:approve"]
     },
-    endpoints: ["/health", "/live-feed", "/jobs", "/transmittal", "/workspace", "/compliance", "/accounts", "/services", "/rosssign", "/auth", "/assistant", "/legal", "/safeguards", "/windows-shell", "/aws-deployment", "/next-dashboard"],
+    endpoints: ["/health", "/live-feed", "/jobs", "/transmittal", "/workspace", "/compliance", "/accounts", "/services", "/rosssign", "/auth", "/assistant", "/legal", "/safeguards", "/windows-shell", "/aws-deployment", "/next-dashboard", "/cloudflare-worker"],
     cybersecurityPlacements: [
         "secret-manager-or-environment-only credentials",
         "OAuth 2.0 employee gate",

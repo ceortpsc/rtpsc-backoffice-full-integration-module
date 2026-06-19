@@ -151,3 +151,8 @@ The `app/` directory, `next.config.js`, `lib/next-runtime.js`, and `config/next-
 
 
 Run `npm run validate:json` before Amplify/S3 packaging to catch malformed JSON files such as an invalid `package.json` before the Amplify config parser fails the build. The root `amplify.yml` uses the standard single-app schema to avoid monorepo parser ambiguity.
+
+
+## Cloudflare Worker and Wrangler
+
+The `cloudflare/worker.mjs`, `wrangler.toml`, `config/cloudflare-worker.js`, and `docs/cloudflare/wrangler-worker.md` files seed an edge read-only worker for health, live-feed metadata, system alerts, action abilities, and WebSocket manifest publication. The local live-feed API exposes `/cloudflare-worker`; deploy with `npm run cf:deploy` only after review and after secrets are configured through Cloudflare bindings or dashboard secrets.
