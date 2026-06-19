@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/rtpsc-theme.css">
+    <title>RTPSC Billing & Balance Recovery</title>
+    <style>
+        :root { --navy:#0F2C59; --gold:#DAC0A3; --eggshell:#F8F4EC; --border:#E5E7EB; --slate:#1F2937; --green:#065F46; --red:#991B1B; }
+        body { margin:0; padding:22px; background:linear-gradient(135deg,var(--rtpsc-eggshell-soft),var(--rtpsc-eggshell)); color:var(--slate); font-family:Segoe UI,system-ui,sans-serif; }
+        .shell { max-width:1320px; margin:0 auto; }
+        header { background:var(--navy); color:white; border-radius:14px; padding:22px 28px; margin-bottom:18px; }
+        header p { color:var(--gold); margin:8px 0 0; font-weight:700; }
+        nav { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:18px; }
+        nav button { background:var(--eggshell); color:var(--navy); border:1px solid var(--border); border-radius:999px; padding:9px 14px; font-weight:800; }
+        .cards { display:grid; grid-template-columns:repeat(5,1fr); gap:14px; margin-bottom:18px; }
+        .card,.panel { background:var(--rtpsc-eggshell-soft); border:1px solid var(--border); border-radius:14px; padding:16px; box-shadow:0 1px 3px rgba(0,0,0,.06); }
+        .card strong { color:var(--navy); display:block; margin-bottom:8px; text-transform:uppercase; }
+        .grid { display:grid; grid-template-columns:2fr 1fr; gap:18px; }
+        table { width:100%; border-collapse:collapse; font-size:13px; } th { background:var(--navy); color:white; text-align:left; padding:10px; } td { padding:10px; border-bottom:1px solid var(--border); }
+        textarea { width:100%; min-height:120px; box-sizing:border-box; border:1px solid var(--border); border-radius:10px; padding:10px; }
+    </style>
+</head>
+<body class="rtpsc-shell">
+    <main class="shell">
+        <header><h1>RTPSC Billing & Balance Recovery</h1><p>Invoices • service fees • tax preparation fees • recovery review • accounting reconciliation • ANDREAA chat assist</p></header>
+        <nav><button>Invoices</button><button>Balances</button><button>Recovery</button><button>Payments</button><button>Reconciliation</button><button>Client Files</button><button>Settings</button><button>AI Assist</button></nav>
+        <section class="cards"><div class="card"><strong>A/R Summary</strong>$0.00 staged</div><div class="card"><strong>Fee Recovery</strong>Review gated</div><div class="card"><strong>Tax Years</strong>2024–2026</div><div class="card"><strong>Client Files</strong>Linked by reference</div><div class="card"><strong>Migrations</strong>Seeded prototype</div></section>
+        <section class="grid">
+            <div class="panel"><h2>Invoice Ledger</h2><table><thead><tr><th>Invoice</th><th>Client Ref</th><th>Tax Year</th><th>Charges</th><th>Status</th></tr></thead><tbody><tr><td>INV-STAGE-001</td><td>CLIENT-REF</td><td>2025</td><td>Tax prep + service fees</td><td>Draft</td></tr><tr><td>INV-STAGE-002</td><td>CLIENT-REF</td><td>2026</td><td>Audit defense</td><td>Review</td></tr></tbody></table></div>
+            <div class="panel"><h2>ANDREAA Assist</h2><textarea readonly>Ask ANDREAA to explain a balance, draft a client message, summarize a ledger, find a client file, or prepare a recovery review packet.</textarea></div>
+        </section>
+    </main>
+</body>
+</html>

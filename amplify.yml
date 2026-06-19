@@ -1,0 +1,31 @@
+version: 1
+applications:
+  - appRoot: .
+    frontend:
+      phases:
+        preBuild:
+          commands:
+            - echo "RTPSC Amplify preBuild started"
+            - node --version
+            - npm --version
+            - npm install --omit=dev --no-audit --no-fund
+            - npm run check:vantage:db
+            - node --check server.js
+            - npm run worker:self-healing
+            - npm run validate:file-definitions
+        build:
+          commands:
+            - echo "RTPSC static runtime surfaces ready for Amplify hosting"
+            - mkdir -p amplify-dist
+            - cp -R assets amplify-dist/assets
+            - cp advanced-presentation.html amplify-dist/index.html
+            - cp report-engine.html forms-cabinet.html billing-dashboard.html rosssign-pad.html letterhead.html system-health-report.html amplify-dist/
+            - cp docs/visual-interface.svg amplify-dist/visual-interface.svg
+            - cp docs/legal-notices.md amplify-dist/legal-notices.md
+      artifacts:
+        baseDirectory: amplify-dist
+        files:
+          - '**/*'
+      cache:
+        paths:
+          - node_modules/**/*

@@ -5,3 +5,6 @@ package-lock.json
 TDS_Bulk_Audit_Cache/
 TDS_Bulk_Audit_Cache_TY2025/
 reports/
+
+dist/
+*.zip
