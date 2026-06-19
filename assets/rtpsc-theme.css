@@ -66,3 +66,10 @@ body.rtpsc-shell,
     .rtpsc-page { padding: 16px; }
     .rtpsc-responsive-grid { grid-template-columns: 1fr !important; }
 }
+    --rtpsc-slate: #1F2937;
+}
+.rtpsc-shell { background: var(--rtpsc-eggshell); color: var(--rtpsc-slate); font-family: "Segoe UI", system-ui, sans-serif; }
+.rtpsc-header { background: linear-gradient(135deg, var(--rtpsc-navy), #071A36); color: white; border: 3px solid var(--rtpsc-black-trim); border-radius: 14px; }
+.rtpsc-gold-rule { height: 4px; background: linear-gradient(90deg, var(--rtpsc-shiny-gold), var(--rtpsc-gold-accent), var(--rtpsc-shiny-gold)); }
+.rtpsc-card { background: white; border: 1px solid #E5E7EB; border-left: 6px solid var(--rtpsc-shiny-gold); border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,.08); }
+.rtpsc-footer { border-top: 2px solid var(--rtpsc-black-trim); color: #475569; font-size: 12px; padding-top: 12px; }

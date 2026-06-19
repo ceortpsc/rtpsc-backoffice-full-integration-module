@@ -8,11 +8,16 @@
     <style>
         :root { --navy:#0F2C59; --gold:#DAC0A3; --eggshell:#F8F4EC; --border:#E5E7EB; --text:#1F2937; }
         body { margin:0; padding:24px; font-family:Segoe UI,system-ui,sans-serif; background:linear-gradient(135deg,var(--rtpsc-eggshell-soft),var(--rtpsc-eggshell)); color:var(--text); }
+    <title>RossSign — Digital Signing Pad</title>
+    <style>
+        :root { --navy:#0F2C59; --gold:#DAC0A3; --eggshell:#F8F4EC; --border:#E5E7EB; --text:#1F2937; }
+        body { margin:0; padding:24px; font-family:Segoe UI,system-ui,sans-serif; background:#F1F5F9; color:var(--text); }
         .shell { max-width:1100px; margin:0 auto; }
         header { background:var(--navy); color:white; padding:22px 28px; border-radius:14px; margin-bottom:20px; }
         header h1 { margin:0; font-size:24px; text-transform:uppercase; }
         header p { margin:8px 0 0; color:var(--gold); font-weight:700; }
         .panel { background:var(--rtpsc-eggshell-soft); border:1px solid var(--border); border-radius:14px; padding:20px; box-shadow:0 1px 3px rgba(0,0,0,.06); }
+        .panel { background:white; border:1px solid var(--border); border-radius:14px; padding:20px; box-shadow:0 1px 3px rgba(0,0,0,.06); }
         canvas { width:100%; height:280px; border:2px dashed var(--navy); border-radius:12px; background:var(--eggshell); touch-action:none; }
         .actions { display:flex; gap:12px; margin-top:16px; flex-wrap:wrap; }
         button { border:0; border-radius:999px; padding:10px 16px; font-weight:800; cursor:pointer; }
@@ -22,6 +27,7 @@
     </style>
 </head>
 <body class="rtpsc-shell">
+<body>
     <main class="shell">
         <header>
             <h1>RossSign Digital Signing Pad</h1>
