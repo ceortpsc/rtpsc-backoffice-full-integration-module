@@ -6,6 +6,9 @@
     <title>RTPSC Executive Runtime Presentation</title>
     <link rel="stylesheet" href="assets/rtpsc-theme.css">
     <style>
+        body { margin:0; padding:28px; background:linear-gradient(135deg,var(--rtpsc-eggshell-soft),var(--rtpsc-eggshell)); font-family:Segoe UI,system-ui,sans-serif; color:var(--rtpsc-slate); }
+        .deck { max-width:1400px; margin:0 auto; }
+        .hero { border:2px solid var(--rtpsc-shiny-gold); border-radius:24px; padding:34px; background:linear-gradient(135deg,var(--rtpsc-navy),var(--rtpsc-navy-deep)); box-shadow:var(--rtpsc-shadow); color:white; }
         body { margin:0; padding:28px; background:radial-gradient(circle at top,#102f60,#050b18 60%); font-family:Segoe UI,system-ui,sans-serif; color:white; }
         .deck { max-width:1400px; margin:0 auto; }
         .hero { border:2px solid var(--rtpsc-shiny-gold); border-radius:24px; padding:34px; background:linear-gradient(135deg,rgba(15,44,89,.96),rgba(17,24,39,.96)); box-shadow:0 24px 80px rgba(0,0,0,.35); }
@@ -13,12 +16,14 @@
         h1 { font-size:46px; margin:0; letter-spacing:-1px; }
         .sub { color:var(--rtpsc-gold-accent); font-size:18px; font-weight:800; margin-top:12px; }
         .grid { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-top:24px; }
+        .panel { background:linear-gradient(180deg,var(--rtpsc-eggshell-soft),var(--rtpsc-eggshell-panel)); color:var(--rtpsc-slate); border:1px solid var(--rtpsc-shiny-gold); border-radius:18px; padding:20px; min-height:150px; }
         .panel { background:rgba(248,244,236,.96); color:var(--rtpsc-slate); border:1px solid var(--rtpsc-shiny-gold); border-radius:18px; padding:20px; min-height:150px; }
         .panel strong { color:var(--rtpsc-navy); display:block; font-size:17px; text-transform:uppercase; margin-bottom:10px; }
         .badge { display:inline-block; padding:7px 10px; border-radius:999px; background:var(--rtpsc-shiny-gold); color:#111827; font-weight:900; font-size:12px; margin:4px 4px 0 0; }
         footer { color:#cbd5e1; margin-top:22px; font-size:13px; }
     </style>
 </head>
+<body class="rtpsc-shell">
 <body>
     <main class="deck">
         <section class="hero">

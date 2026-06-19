@@ -12,6 +12,7 @@ applications:
             - npm run check:vantage:db
             - node --check server.js
             - npm run worker:self-healing
+            - npm run validate:file-definitions
         build:
           commands:
             - echo "RTPSC static runtime surfaces ready for Amplify hosting"

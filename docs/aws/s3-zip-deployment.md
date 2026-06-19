@@ -31,6 +31,10 @@ Use `docs/aws/atlas-trust-policy.template.json` as a placeholder template only. 
 
 The repository includes `amplify.yml` for copy/paste or direct Amplify detection. The build spec installs production dependencies, runs `npm run check:vantage:db`, validates `server.js`, runs the dry-run self-healing worker, and publishes the static operator surfaces from `amplify-dist`. Keep live credentials in Amplify environment variables or AWS Secrets Manager only; do not paste credentials into the build spec.
 
+## File definition integrity
+
+Run `npm run validate:file-definitions` before packaging or pasting generated shell blocks. This check detects unterminated here-doc blocks such as missing `EOF` delimiters and final lines ending in a shell continuation slash. Complete the block or strip the partial section before committing or piping the delimiter.
+
 ## Guardrails
 
 - Keep S3 public access block enabled.

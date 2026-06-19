@@ -135,3 +135,11 @@ The `config/aws-deployment.js` registry, `docs/aws/s3-zip-deployment.md` bluepri
 
 
 The repository also includes `amplify.yml` as a copy/paste-ready AWS Amplify build specification. It publishes static HTML/operator assets from `amplify-dist` after running syntax checks and the dry-run self-healing worker, while keeping secrets in environment variables or a secret manager only.
+
+
+Use `npm run validate:file-definitions` before packaging or copying generated scripts to catch unterminated here-doc blocks and final continuation slashes that can cause merge or deployment errors.
+
+
+## Production eggshell theme update
+
+The shared `assets/rtpsc-theme.css` theme now applies an eggshell-first production visual system with navy headers, shiny gold accents, black trim, responsive panels, reusable cards, pills, tables, and footer treatments. Static operator surfaces now load the shared theme so Amplify and S3 zip deployments render consistently from the same production-ready CSS package.

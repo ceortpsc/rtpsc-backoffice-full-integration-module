@@ -16,6 +16,13 @@ const BRAND_ASSETS = {
         systemHealthReport: "system-health-report.html"
     },
     documentSurfaces: ["official-office-forms", "client-documents", "reports", "system-health-reports", "interface-output-panel"],
+    productionTheme: {
+        stylesheet: "assets/rtpsc-theme.css",
+        primaryBackground: "eggshell",
+        headerTreatment: "navy-gradient-with-gold-border",
+        surfaceTreatment: "eggshell-soft-panels",
+        responsiveClass: "rtpsc-responsive-grid"
+    },
     footer: {
         copyright: "Copyright (c) 2026 ROSS TAX PRO SOFTWARE CO. All rights reserved.",
         privacy: "Privacy and security controls enforced by RTPSC runtime guardrails.",

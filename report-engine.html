@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/rtpsc-theme.css">
     <title>RTPSC ERO Workspace — Tax Office SaaS Console</title>
     <style>
         :root {
@@ -18,13 +19,14 @@
         }
         body {
             font-family: 'Segoe UI', system-ui, sans-serif;
-            background-color: #F1F5F9;
+            background: linear-gradient(135deg,var(--rtpsc-eggshell-soft),var(--rtpsc-eggshell));
             color: var(--slate);
             margin: 0;
             padding: 20px;
         }
         .container { max-width: 1500px; margin: 0 auto; }
         .workspace-grid { display: grid; grid-template-columns: repeat(6, minmax(150px, 1fr)); gap: 14px; margin-bottom: 25px; }
+        .workspace-card { background: var(--rtpsc-eggshell-soft); border-left: 5px solid var(--gold); border-radius: 8px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
         .workspace-card { background: white; border-left: 5px solid var(--gold); border-radius: 8px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
         .workspace-card strong { display: block; color: var(--navy); font-size: 10pt; text-transform: uppercase; margin-bottom: 6px; }
         .workspace-card span { font-size: 8.5pt; color: #475569; line-height: 1.35; }
@@ -44,7 +46,7 @@
         header p { margin: 5px 0 0 0; color: var(--gold); font-size: 9.5pt; font-weight: bold; }
 
         .table-section {
-            background: white;
+            background: var(--rtpsc-eggshell-soft);
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 1px 3px rgba(0,0,0,0.05);
@@ -61,7 +63,7 @@
         .badge-red { background: #FEE2E2; color: var(--red); }
     </style>
 </head>
-<body>
+<body class="rtpsc-shell">
     <div class="container">
         <header>
             <div>
