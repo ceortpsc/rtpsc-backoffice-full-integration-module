@@ -56,6 +56,7 @@ const CONFIG = {
     awsDeployment: AWS_DEPLOYMENT,
     nextDashboardModules: NEXT_DASHBOARD_MODULES,
     cloudflareWorker: CLOUDFLARE_WORKER
+    awsDeployment: AWS_DEPLOYMENT
 };
 
 if (!fs.existsSync(CONFIG.exportDirectory)) {

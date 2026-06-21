@@ -26,6 +26,7 @@ const LIVE_FEED_INTERFACE = {
             { method: "GET", path: "/aws-deployment", purpose: "AWS S3 zip deployment, Atlas trust policy, and Amplify packaging metadata" },
             { method: "GET", path: "/next-dashboard", purpose: "Next.js dashboard modules, websocket channels, endpoints, and action abilities" },
             { method: "GET", path: "/cloudflare-worker", purpose: "Cloudflare Worker Wrangler deployment, edge endpoints, and guardrails" }
+            { method: "GET", path: "/aws-deployment", purpose: "AWS S3 zip deployment, Atlas trust policy, and Amplify packaging metadata" }
         ]
     },
     mongodbFederation: {

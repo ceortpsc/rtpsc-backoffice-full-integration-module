@@ -8,6 +8,10 @@
     <style>
         :root { --navy:#0F2C59; --gold:#DAC0A3; --eggshell:#F8F4EC; --border:#E5E7EB; --slate:#1F2937; }
         body { margin:0; padding:22px; background:linear-gradient(135deg,var(--rtpsc-eggshell-soft),var(--rtpsc-eggshell)); color:var(--slate); font-family:Segoe UI,system-ui,sans-serif; }
+    <title>RTPSC Forms Cabinet</title>
+    <style>
+        :root { --navy:#0F2C59; --gold:#DAC0A3; --eggshell:#F8F4EC; --border:#E5E7EB; --slate:#1F2937; }
+        body { margin:0; padding:22px; background:#F1F5F9; color:var(--slate); font-family:Segoe UI,system-ui,sans-serif; }
         .shell { max-width:1280px; margin:0 auto; }
         header { background:var(--navy); color:white; border-radius:14px; padding:22px 28px; margin-bottom:18px; }
         header p { color:var(--gold); font-weight:700; margin:8px 0 0; }
@@ -15,6 +19,7 @@
         nav button { border:1px solid var(--border); border-radius:999px; background:var(--eggshell); color:var(--navy); padding:9px 14px; font-weight:800; }
         .grid { display:grid; grid-template-columns: 1fr 1fr; gap:18px; }
         .panel { background:var(--rtpsc-eggshell-soft); border:1px solid var(--border); border-radius:14px; padding:18px; box-shadow:0 1px 3px rgba(0,0,0,.06); }
+        .panel { background:white; border:1px solid var(--border); border-radius:14px; padding:18px; box-shadow:0 1px 3px rgba(0,0,0,.06); }
         input, select, textarea { width:100%; border:1px solid var(--border); border-radius:10px; padding:10px; margin-top:8px; box-sizing:border-box; }
         textarea { min-height:160px; font-family:monospace; }
         .actions { display:flex; gap:10px; margin-top:12px; flex-wrap:wrap; }
@@ -24,6 +29,7 @@
     </style>
 </head>
 <body class="rtpsc-shell">
+<body>
     <main class="shell">
         <header><h1>RTPSC Forms Cabinet</h1><p>IRS form lookup • filing cabinet catalog • editor interface • RossSign envelope export</p></header>
         <nav><button>Lookup</button><button>Cabinet</button><button>Editor</button><button>eSign Envelope</button><button>Exports</button><button>Settings</button></nav>

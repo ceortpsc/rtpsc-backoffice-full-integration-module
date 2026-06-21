@@ -30,6 +30,7 @@ const WINDOWS_APPLICATION_SHELL = {
         scopes: ["openid", "profile", "email", "jobs:read", "jobs:stage", "ledgers:review", "transmittals:approve"]
     },
     endpoints: ["/health", "/live-feed", "/jobs", "/transmittal", "/workspace", "/compliance", "/accounts", "/services", "/rosssign", "/auth", "/assistant", "/legal", "/safeguards", "/windows-shell", "/aws-deployment", "/next-dashboard", "/cloudflare-worker"],
+    endpoints: ["/health", "/live-feed", "/jobs", "/transmittal", "/workspace", "/compliance", "/accounts", "/services", "/rosssign", "/auth", "/assistant", "/legal", "/safeguards", "/windows-shell", "/aws-deployment"],
     cybersecurityPlacements: [
         "secret-manager-or-environment-only credentials",
         "OAuth 2.0 employee gate",
