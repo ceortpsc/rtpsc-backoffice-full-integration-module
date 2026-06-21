@@ -26,6 +26,7 @@ const AWS_DEPLOYMENT = {
     packaging: {
         script: "scripts/package-aws-deployment.sh",
         outputDirectory: "dist",
+        include: ["assets", "app", "config", "docs", "lib", "scripts", "*.html", "*.js", "package.json", "amplify.yml", "next.config.js"],
         include: ["assets", "config", "docs", "scripts", "*.html", "*.js", "package.json", "amplify.yml"],
         exclude: [".git", ".env", "node_modules", "dist", "authorized_8821_vault", "*.pdf", "*.xlsx", "*.csv", "*.zip"]
     },

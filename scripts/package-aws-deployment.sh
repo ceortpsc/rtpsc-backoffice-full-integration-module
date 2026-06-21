@@ -15,6 +15,9 @@ fi
 
 cd "$ROOT_DIR"
 zip -r "$ZIP_PATH" \
+  assets app cloudflare config docs lib scripts \
+  advanced-presentation.html billing-dashboard.html forms-cabinet.html letterhead.html report-engine.html rosssign-pad.html system-health-report.html \
+  server.js self-healing-worker.js vantage_db_driver.js package.json amplify.yml next.config.js wrangler.toml \
   assets config docs scripts \
   advanced-presentation.html billing-dashboard.html forms-cabinet.html letterhead.html report-engine.html rosssign-pad.html system-health-report.html \
   server.js self-healing-worker.js vantage_db_driver.js package.json amplify.yml \

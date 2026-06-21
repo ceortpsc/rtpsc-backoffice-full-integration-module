@@ -29,6 +29,7 @@ Use `docs/aws/atlas-trust-policy.template.json` as a placeholder template only. 
 
 ## AWS Amplify build specification
 
+The repository includes `amplify.yml` for copy/paste or direct Amplify detection. The build spec uses the standard single-app Amplify schema, installs production dependencies, runs `npm run validate:json`, runs `npm run check:vantage:db`, validates `server.js`, runs the dry-run self-healing worker, and publishes the static operator surfaces from `amplify-dist`. Keep live credentials in Amplify environment variables or AWS Secrets Manager only; do not paste credentials into the build spec.
 The repository includes `amplify.yml` for copy/paste or direct Amplify detection. The build spec installs production dependencies, runs `npm run check:vantage:db`, validates `server.js`, runs the dry-run self-healing worker, and publishes the static operator surfaces from `amplify-dist`. Keep live credentials in Amplify environment variables or AWS Secrets Manager only; do not paste credentials into the build spec.
 
 ## File definition integrity

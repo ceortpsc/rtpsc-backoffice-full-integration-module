@@ -1,5 +1,6 @@
 {
   "name": "rtpsc-backoffice-full-integration-module",
+  "version": "60.7.0",
   "version": "60.5.0",
   "version": "60.4.1",
   "description": "Ross Tax Pro backoffice integration module runtime drivers.",
@@ -9,6 +10,21 @@
     "check:vantage:db": "node --check vantage_db_driver.js",
     "worker:self-healing": "node self-healing-worker.js",
     "package:aws": "bash scripts/package-aws-deployment.sh",
+    "validate:file-definitions": "node scripts/validate-file-definitions.js",
+    "validate:json": "node scripts/validate-json-files.js",
+    "next:dev": "next dev",
+    "next:build": "next build",
+    "next:start": "next start",
+    "cf:check": "node --check cloudflare/worker.mjs",
+    "cf:dev": "wrangler dev",
+    "cf:deploy": "wrangler deploy"
+  },
+  "dependencies": {
+    "mongodb": "^6.17.0",
+    "next": "^15.3.4",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "wrangler": "^4.20.0"
     "validate:file-definitions": "node scripts/validate-file-definitions.js"
     "package:aws": "bash scripts/package-aws-deployment.sh"
   },

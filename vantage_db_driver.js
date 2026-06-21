@@ -1,6 +1,7 @@
 /**
  * Vantage Core Systems - Production Microservice Architecture
  * File: vantage_db_driver.js
+ * Version: 60.7.0 - Fully Integrated Enterprise Target
  * Version: 60.5.0 - Fully Integrated Enterprise Target
  * Version: 60.4.1 - Fully Integrated Enterprise Target
  */

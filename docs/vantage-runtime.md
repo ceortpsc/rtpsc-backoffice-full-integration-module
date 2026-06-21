@@ -143,3 +143,16 @@ Use `npm run validate:file-definitions` before packaging or copying generated sc
 ## Production eggshell theme update
 
 The shared `assets/rtpsc-theme.css` theme now applies an eggshell-first production visual system with navy headers, shiny gold accents, black trim, responsive panels, reusable cards, pills, tables, and footer treatments. Static operator surfaces now load the shared theme so Amplify and S3 zip deployments render consistently from the same production-ready CSS package.
+
+
+## Next.js dashboards and modules
+
+The `app/` directory, `next.config.js`, `lib/next-runtime.js`, and `config/next-dashboard-modules.js` seed a Next.js operations console with command center, ERO workspace, system health alerts, terminal output, action ability catalog, API route handlers, and a WebSocket channel manifest endpoint. The local live-feed API exposes `/next-dashboard`, while the Next.js layer exposes `/api/live-feed`, `/api/system-health`, `/api/actions`, and `/api/ws` for dashboard wiring. Persistent WebSocket upgrades must be attached at the runtime gateway before production use.
+
+
+Run `npm run validate:json` before Amplify/S3 packaging to catch malformed JSON files such as an invalid `package.json` before the Amplify config parser fails the build. The root `amplify.yml` uses the standard single-app schema to avoid monorepo parser ambiguity.
+
+
+## Cloudflare Worker and Wrangler
+
+The `cloudflare/worker.mjs`, `wrangler.toml`, `config/cloudflare-worker.js`, and `docs/cloudflare/wrangler-worker.md` files seed an edge read-only worker for health, live-feed metadata, system alerts, action abilities, and WebSocket manifest publication. The local live-feed API exposes `/cloudflare-worker`; deploy with `npm run cf:deploy` only after review and after secrets are configured through Cloudflare bindings or dashboard secrets.

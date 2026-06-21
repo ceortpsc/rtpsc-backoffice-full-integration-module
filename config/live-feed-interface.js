@@ -23,6 +23,9 @@ const LIVE_FEED_INTERFACE = {
             { method: "GET", path: "/billing", purpose: "invoice balance recovery, accounting reconciliation, and billing dashboards" },
             { method: "GET", path: "/brand", purpose: "brand assets, colors, logos, letterhead, footers, and health report surfaces" },
             { method: "GET", path: "/self-healing", purpose: "self-healing worker, background checks, and repair policy metadata" },
+            { method: "GET", path: "/aws-deployment", purpose: "AWS S3 zip deployment, Atlas trust policy, and Amplify packaging metadata" },
+            { method: "GET", path: "/next-dashboard", purpose: "Next.js dashboard modules, websocket channels, endpoints, and action abilities" },
+            { method: "GET", path: "/cloudflare-worker", purpose: "Cloudflare Worker Wrangler deployment, edge endpoints, and guardrails" }
             { method: "GET", path: "/aws-deployment", purpose: "AWS S3 zip deployment, Atlas trust policy, and Amplify packaging metadata" }
         ]
     },
