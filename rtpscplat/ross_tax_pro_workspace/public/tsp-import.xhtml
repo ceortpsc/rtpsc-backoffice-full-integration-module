@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ROSS TAX PRO | TSP Import Worker</title>
+  <link rel="stylesheet" type="text/css" href="../assets/theme.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="index.xhtml">
+        <div class="brand-mark">RTP</div>
+        <div>
+          <h1>ROSS TAX PRO</h1>
+          <p>TSP import worker and status conversion</p>
+        </div>
+      </a>
+      <nav class="nav-links">
+        <a href="index.xhtml">Home</a>
+        <a href="irs-taxpro.xhtml">IRS TaxPro</a>
+      </nav>
+    </header>
+    <main class="page-content">
+      <section class="card">
+        <h2>TSP Client Status Conversion Worker</h2>
+        <p>Convert TaxSlayer ProWeb client statuses into a local export-ready bundle for import, reconciliation, and retention.</p>
+        <div class="ai-grid">
+          <label>Client ID<input id="tsp-client-id" placeholder="Enter client ID" /></label>
+          <label>Client name<input id="tsp-client-name" placeholder="Enter client name" /></label>
+          <label>Status<select id="tsp-status"><option value="PENDING">Pending</option><option value="COMPLETE">Complete</option><option value="REVIEW">Review</option></select></label>
+          <label>Tax year<input id="tsp-tax-year" value="2026" /></label>
+          <label>Service type<input id="tsp-service-type" value="Return Preparation" /></label>
+        </div>
+        <div class="hero-actions">
+          <button class="btn primary" type="button" onclick="runImportWorker()">Run Import Worker</button>
+        </div>
+        <div id="tsp-output" class="ai-output"></div>
+      </section>
+    </main>
+  </div>
+  <script type="text/javascript">
+    async function runImportWorker() {
+      const payload = {
+        clientId: document.getElementById('tsp-client-id').value,
+        clientName: document.getElementById('tsp-client-name').value,
+        status: document.getElementById('tsp-status').value,
+        taxYear: document.getElementById('tsp-tax-year').value,
+        serviceType: document.getElementById('tsp-service-type').value,
+        records: [{ clientId: document.getElementById('tsp-client-id').value, clientName: document.getElementById('tsp-client-name').value, status: document.getElementById('tsp-status').value, taxYear: document.getElementById('tsp-tax-year').value, serviceType: document.getElementById('tsp-service-type').value }]
+      };
+      const response = await fetch('/api/workers/tsp-import', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      const result = await response.json();
+      const output = document.getElementById('tsp-output');
+      output.innerHTML = `
+        <h3>${result.worker}</h3>
+        <p>${result.message}</p>
+        <p>Export ready: ${result.bundle.exportReady ? 'Yes' : 'No'}</p>
+        <p>Record count: ${result.bundle.count}</p>
+        <pre>${JSON.stringify(result.bundle.records, null, 2)}</pre>
+      `;
+    }
+  </script>
+</body>
+</html>

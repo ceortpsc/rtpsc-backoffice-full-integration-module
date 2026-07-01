@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ROSS TAX PRO | Publication and Policy Updates</title>
+  <link rel="stylesheet" type="text/css" href="../assets/theme.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="index.xhtml">
+        <div class="brand-mark">PU</div>
+        <div>
+          <h1>Publication and Policy Updates</h1>
+          <p>Terms, policy statements, mandates, procedural changes, updates, and communications</p>
+        </div>
+      </a>
+      <nav class="nav-links">
+        <a href="index.xhtml">Home</a>
+        <a href="compliance-center.xhtml">Compliance Center</a>
+      </nav>
+    </header>
+    <main class="page-content">
+      <section class="card">
+        <h2>Publication Change Center</h2>
+        <p>Load all changes for client-facing letters, employee/ERO directives, consent acknowledgments, status summaries, and stage reports.</p>
+        <div class="hero-actions">
+          <button class="btn primary" type="button" onclick="loadPublicationChanges()">Load Publication Changes</button>
+          <button class="btn secondary" type="button" onclick="exportPublicationChanges()">Export Changes Packet</button>
+        </div>
+        <div id="publication-output" class="ai-output"></div>
+      </section>
+    </main>
+  </div>
+  <script type="text/javascript">
+    async function loadPublicationChanges() {
+      const response = await fetch('/api/compliance/publications/changes');
+      const data = await response.json();
+      const output = document.getElementById('publication-output');
+
+      output.innerHTML = `
+        <h3>Metadata</h3>
+        <p>Policy Version: ${data.metadata.policyVersion} | Terms Version: ${data.metadata.tosVersion} | Effective Date: ${data.metadata.effectiveDate}</p>
+        <h3>Policy Statements and Mandates</h3>
+        <ul>${data.policyStatements.map((item) => '<li><strong>' + item.title + '</strong><br />' + item.statement + '<br /><em>Mandate:</em> ' + item.mandate + '</li>').join('')}</ul>
+        <h3>IRS Publication Updates</h3>
+        <ul>${data.irsPublicationUpdates.map((item) => '<li><strong>' + item.title + '</strong> (' + item.reference + ')<br />' + item.summary + '</li>').join('')}</ul>
+        <h3>Consent Acknowledgments</h3>
+        <ul>${data.consentAcknowledgments.required.map((item) => '<li>' + item + '</li>').join('')}</ul>
+        <h3>Client-Facing Communications</h3>
+        <p><strong>Welcome Letter:</strong> ${data.clientFacing.welcomeLetter}</p>
+        <pre>${data.clientFacing.followUpTemplate}</pre>
+        <pre>${data.clientFacing.statusSummaryTemplate}</pre>
+        <h3>Employee-Facing Reports</h3>
+        <pre>${data.employeeFacing.operationalMemo}</pre>
+        <pre>${data.employeeFacing.stageReportTemplate}</pre>
+        <h3>ERO / Service Bureau Directive</h3>
+        <pre>${data.eroFacing.serviceBureauDirective}</pre>
+        <pre>${data.eroFacing.bureauSummaryTemplate}</pre>
+      `;
+    }
+
+    async function exportPublicationChanges() {
+      const response = await fetch('/api/compliance/publications/export');
+      const data = await response.json();
+      const output = document.getElementById('publication-output');
+
+      output.innerHTML = `
+        <h3>Export Ready</h3>
+        <p><strong>Filename:</strong> ${data.filename}</p>
+        <pre>${data.text}</pre>
+      `;
+    }
+  </script>
+</body>
+</html>

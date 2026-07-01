@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ROSS TAX PRO | ERO Branding Engine</title>
+  <link rel="stylesheet" type="text/css" href="../assets/theme.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="index.xhtml">
+        <div class="brand-mark">BE</div>
+        <div>
+          <h1>ERO Branding Engine</h1>
+          <p>Letterhead, footer copyright, and digital owner signature block generator</p>
+        </div>
+      </a>
+      <nav class="nav-links">
+        <a href="index.xhtml">Home</a>
+        <a href="service-catalog.xhtml">Service Catalog</a>
+      </nav>
+    </header>
+    <main class="page-content">
+      <section class="card">
+        <h2>Generate Branding Blocks</h2>
+        <div class="ai-grid">
+          <label>Company name<input id="brand-company" type="text" value="ROSS TAX PRO SOFTWARE CO" /></label>
+          <label>DBA name<input id="brand-dba" type="text" value="ROSS TAX PRO" /></label>
+          <label>Owner name<input id="brand-owner" type="text" value="Condre Dvon Ross" /></label>
+          <label>Owner title<input id="brand-title" type="text" value="CEO / ERO Owner" /></label>
+        </div>
+        <div class="hero-actions">
+          <button class="btn primary" type="button" onclick="generateBrandingBlocks()">Generate Branding Blocks</button>
+          <button class="btn secondary" type="button" onclick="generateBrandedExportPackage()">Generate Branded Export</button>
+        </div>
+        <div id="branding-output" class="ai-output"></div>
+      </section>
+    </main>
+  </div>
+  <script type="text/javascript">
+    function buildBrandingProfile() {
+      return {
+        companyName: document.getElementById('brand-company').value,
+        dbaName: document.getElementById('brand-dba').value,
+        ownerName: document.getElementById('brand-owner').value,
+        ownerTitle: document.getElementById('brand-title').value
+      };
+    }
+
+    async function generateBrandingBlocks() {
+      const response = await fetch('/api/export/branding', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ brandingProfile: buildBrandingProfile() })
+      });
+      const data = await response.json();
+      const output = document.getElementById('branding-output');
+
+      output.innerHTML =
+        '<h3>Letterhead</h3>'
+        + '<p>' + data.letterhead.companyLine + '</p>'
+        + '<p>' + data.letterhead.addressLine + '</p>'
+        + '<p>' + data.letterhead.contactLine + '</p>'
+        + '<h3>Digital Owner Signature</h3>'
+        + '<p>' + data.signatureBlock.signatureText + '</p>'
+        + '<p>Token: ' + data.signatureBlock.signatureToken + '</p>'
+        + '<h3>Footer</h3>'
+        + '<p>' + data.footer.copyrightLine + '</p>';
+    }
+
+    async function generateBrandedExportPackage() {
+      const response = await fetch('/api/export/package', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          payload: {
+            title: 'ERO Branded Letterhead Export',
+            body: 'This export package validates ERO branding blocks and digital owner signature for authorized release.'
+          },
+          options: {
+            preset: 'ero-portal',
+            brandingProfile: buildBrandingProfile()
+          }
+        })
+      });
+      const data = await response.json();
+      const output = document.getElementById('branding-output');
+      output.innerHTML =
+        '<h3>Branded Export Ready</h3>'
+        + '<p>Format: ' + data.format + '</p>'
+        + '<p>Company: ' + data.brandingProfile.companyName + '</p>'
+        + '<p>Signed By: ' + data.signatureBlock.ownerName + '</p>'
+        + '<pre>' + data.content.replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</pre>';
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,59 @@
+:root {
+    color-scheme: light;
+    --bg-start: #f4f7ff;
+    --bg-end: #d9f0ff;
+    --ink: #12213b;
+    --card: rgba(255, 255, 255, 0.82);
+    --accent: #0b62f5;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: "Space Grotesk", "Segoe UI", sans-serif;
+    color: var(--ink);
+    background: radial-gradient(circle at 20% 20%, #ffffff 0%, var(--bg-start) 50%, var(--bg-end) 100%);
+}
+
+.dashboard-shell {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 3rem 1rem 4rem;
+}
+
+.hero h1 {
+    margin: 0.5rem 0;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+}
+
+.kicker {
+    margin: 0;
+    letter-spacing: 0.12em;
+    font-weight: 700;
+    color: var(--accent);
+}
+
+.grid {
+    margin-top: 2rem;
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.card {
+    border-radius: 1rem;
+    background: var(--card);
+    border: 1px solid rgba(11, 98, 245, 0.2);
+    padding: 1rem;
+    backdrop-filter: blur(6px);
+}
+
+.card strong {
+    display: inline-block;
+    margin: 0.4rem 0;
+    font-size: 1.2rem;
+}

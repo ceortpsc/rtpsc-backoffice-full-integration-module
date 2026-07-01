@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ROSS TAX PRO | Task Manager</title>
+  <link rel="stylesheet" type="text/css" href="../assets/theme.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="index.xhtml">
+        <div class="brand-mark">TM</div>
+        <div>
+          <h1>ROSS TAX PRO</h1>
+          <p>Fully automated task orchestration</p>
+        </div>
+      </a>
+      <nav class="nav-links">
+        <a href="index.xhtml">Home</a>
+        <a href="automation-status.xhtml">Automation</a>
+      </nav>
+    </header>
+    <main class="page-content">
+      <section class="card">
+        <h2>Task Manager</h2>
+        <p>This manager synchronizes queued tasks, updates execution state, and keeps the background workflow fully automated.</p>
+        <div class="hero-actions">
+          <button class="btn primary" type="button" onclick="runTaskManager()">Run Task Manager</button>
+        </div>
+        <div id="task-manager-output" class="ai-output"></div>
+      </section>
+    </main>
+  </div>
+  <script type="text/javascript">
+    async function runTaskManager() {
+      const response = await fetch('/api/automation/task-manager', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ tasks: [{ id: 'sync', name: 'Synchronize compliance' }, { id: 'exports', name: 'Package exports' }, { id: 'finance', name: 'Reconcile ledger' }], syncMode: 'AUTOMATED' })
+      });
+      const result = await response.json();
+      const output = document.getElementById('task-manager-output');
+      output.innerHTML = `
+        <h3>Task Manager Status</h3>
+        <p>${result.taskManagerRun.message}</p>
+        <p>Mode: ${result.taskManagerRun.syncMode}</p>
+        <p>Run count: ${result.taskManagerRun.runCount}</p>
+        <ul>${result.taskManagerRun.tasks.map((task) => '<li>' + task.name + ' — ' + task.status + '</li>').join('')}</ul>
+      `;
+    }
+  </script>
+</body>
+</html>

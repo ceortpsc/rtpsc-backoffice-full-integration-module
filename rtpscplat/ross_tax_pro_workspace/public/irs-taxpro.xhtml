@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ROSS TAX PRO | IRS TaxPro Integration</title>
+  <link rel="stylesheet" type="text/css" href="../assets/theme.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="index.xhtml">
+        <div class="brand-mark">RTP</div>
+        <div>
+          <h1>ROSS TAX PRO</h1>
+          <p>IRS TaxPro integration and submission routing</p>
+        </div>
+      </a>
+      <nav class="nav-links">
+        <a href="index.xhtml">Home</a>
+        <a href="sbtpg-config.xhtml">SBTPG Config</a>
+        <a href="compliance-center.xhtml">Compliance</a>
+      </nav>
+    </header>
+    <main class="page-content">
+      <section class="card">
+        <h2>IRS TaxPro API Integration</h2>
+        <p>Execute credential-gated IRS TaxPro account integration, e-file readiness, and transmission validation from one secure interface.</p>
+        <div class="ai-grid">
+          <label>Credential username
+            <input id="cred-username" type="text" value="condreros" />
+          </label>
+          <label>Credential password
+            <input id="cred-password" type="password" value="Houston1!" />
+          </label>
+          <label>Taxpayer name
+            <input id="taxpayer-name" type="text" value="Jane Client" />
+          </label>
+          <label>Taxpayer ID
+            <input id="taxpayer-id" type="text" value="TP-901" />
+          </label>
+          <label>Service type
+            <select id="service-type">
+              <option value="Return Preparation">Return Preparation</option>
+              <option value="E-File Submission">E-File Submission</option>
+              <option value="TDS Request">TDS Request</option>
+            </select>
+          </label>
+          <label>Tax year
+            <input id="tax-year" type="number" value="2025" />
+          </label>
+          <label>ERO name
+            <input id="ero-name" type="text" value="Ross Tax ERO" />
+          </label>
+          <label>ERO EFIN
+            <input id="ero-efin" type="text" value="123456" />
+          </label>
+          <label>Practitioner PIN
+            <input id="practitioner-pin" type="text" value="12345" />
+          </label>
+          <label>Practitioner PTIN
+            <input id="practitioner-ptin" type="text" value="P12345678" />
+          </label>
+          <label>Taxpayer SSN last 4
+            <input id="ssn-last4" type="text" value="1234" />
+          </label>
+          <label>Ledger debit total
+            <input id="debit-total" type="number" value="1500" />
+          </label>
+          <label>Ledger credit total
+            <input id="credit-total" type="number" value="1500" />
+          </label>
+          <label><input id="mfa-verified" type="checkbox" checked="checked" /> MFA verified</label>
+          <label><input id="identity-verified" type="checkbox" checked="checked" /> Identity verified</label>
+          <label><input id="ssc-present" type="checkbox" checked="checked" /> SSC present</label>
+          <label><input id="consent-signed" type="checkbox" checked="checked" /> Consent signed</label>
+          <label><input id="caf-submitted" type="checkbox" /> CAF submitted</label>
+        </div>
+        <div class="hero-actions">
+          <button class="btn primary" type="button" onclick="executeIntegration()">Execute IRS Integration</button>
+          <button class="btn secondary" type="button" onclick="executeTransmissionValidation()">Execute Transmission Validation</button>
+        </div>
+        <p class="support-copy">Required retention attachments are enforced automatically: signed-8879, government-id, consent-form, retention-certification.</p>
+        <div id="irs-output" class="ai-output"></div>
+      </section>
+    </main>
+  </div>
+  <script type="text/javascript">
+    function buildCredentials() {
+      return {
+        username: document.getElementById('cred-username').value,
+        password: document.getElementById('cred-password').value,
+        mfaVerified: document.getElementById('mfa-verified').checked
+      };
+    }
+
+    function buildTransmissionPayload() {
+      return {
+        credentials: buildCredentials(),
+        taxpayerName: document.getElementById('taxpayer-name').value,
+        taxpayerId: document.getElementById('taxpayer-id').value,
+        serviceType: document.getElementById('service-type').value,
+        taxYear: Number(document.getElementById('tax-year').value),
+        ssnLast4: document.getElementById('ssn-last4').value,
+        sscPresent: document.getElementById('ssc-present').checked,
+        identityVerified: document.getElementById('identity-verified').checked,
+        consentSigned: document.getElementById('consent-signed').checked,
+        cafSubmitted: document.getElementById('caf-submitted').checked,
+        eroName: document.getElementById('ero-name').value,
+        eroEfin: document.getElementById('ero-efin').value,
+        practitionerPin: document.getElementById('practitioner-pin').value,
+        practitionerPtin: document.getElementById('practitioner-ptin').value,
+        debitTotal: Number(document.getElementById('debit-total').value),
+        creditTotal: Number(document.getElementById('credit-total').value),
+        attachments: ['signed-8879', 'government-id', 'consent-form', 'retention-certification']
+      };
+    }
+
+    async function executeIntegration() {
+      const response = await fetch('/api/irs/integration', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(buildTransmissionPayload())
+      });
+      const payload = await response.json();
+      const output = document.getElementById('irs-output');
+
+      if (!response.ok) {
+        output.innerHTML = '<h3>Integration Access Denied</h3><p>' + (payload.error || 'Credential validation failed.') + '</p><p>Reason: ' + ((payload.access && payload.access.reason) || 'UNKNOWN') + '</p>';
+        return;
+      }
+
+      const integration = payload.integration;
+      const packet = payload.packet;
+      output.innerHTML = `
+        <h3>IRS Integration Executed</h3>
+        <p>Access: ${payload.access.role} | User: ${payload.access.user.username}</p>
+        <p>Provider: ${integration.provider}</p>
+        <p>Status: ${integration.status} | Environment: ${integration.environment} | Sync Mode: ${integration.syncMode}</p>
+        <p>Packet Ready: ${packet.readyForFax ? 'Yes' : 'No'} | Signature: ${packet.signatureMode}</p>
+        <ul>${integration.capabilities.map((capability) => '<li>' + capability + '</li>').join('')}</ul>
+      `;
+    }
+
+    async function executeTransmissionValidation() {
+      const response = await fetch('/api/irs/transmission-validate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(buildTransmissionPayload())
+      });
+      const payload = await response.json();
+      const output = document.getElementById('irs-output');
+
+      if (!response.ok) {
+        output.innerHTML = '<h3>Transmission Blocked</h3><p>' + (payload.error || 'Role-based access denied.') + '</p><p>Reason: ' + ((payload.access && payload.access.reason) || 'UNKNOWN') + '</p>';
+        return;
+      }
+
+      const validation = payload.validation;
+      const blockerList = validation.blockers.length > 0
+        ? '<ul>' + validation.blockers.map((item) => '<li>' + item + '</li>').join('') + '</ul>'
+        : '<p>No blockers detected.</p>';
+
+      output.innerHTML = `
+        <h3>Transmission Validation Executed</h3>
+        <p>Access: ${payload.access.role} | User: ${payload.access.user.username}</p>
+        <p>Status: ${validation.transmissionStatus} | Return Validation: ${validation.returnValidation}</p>
+        <p>E-File Ready: ${validation.efileReady ? 'Yes' : 'No'}</p>
+        <p>Balance Certification: ${validation.complianceLedger.balanceCertification.status}</p>
+        <p>Retention Compliant: ${validation.retentionCertification.compliant ? 'Yes' : 'No'}</p>
+        <h4>Blockers</h4>
+        ${blockerList}
+        <h4>Form 4883C XML Preview</h4>
+        <pre>${validation.conversion.xml.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</pre>
+      `;
+    }
+  </script>
+</body>
+</html>

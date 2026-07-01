@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ROSS TAX PRO | Automation Status</title>
+  <link rel="stylesheet" type="text/css" href="../assets/theme.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="index.xhtml">
+        <div class="brand-mark">RTP</div>
+        <div>
+          <h1>ROSS TAX PRO</h1>
+          <p>Automation scheduler and background execution status</p>
+        </div>
+      </a>
+      <nav class="nav-links">
+        <a href="index.xhtml">Home</a>
+        <a href="redaction-center.xhtml">Redaction</a>
+      </nav>
+    </header>
+    <main class="page-content">
+      <section class="card">
+        <h2>Automated Background Operations</h2>
+        <p>This status view reports scheduled background tasks that can run without a dedicated module or interface.</p>
+        <div class="hero-actions">
+          <button class="btn primary" type="button" onclick="runAutomationScheduler()">Run Scheduler</button>
+        </div>
+        <div id="automation-output" class="ai-output"></div>
+      </section>
+    </main>
+  </div>
+  <script type="text/javascript">
+    async function runAutomationScheduler() {
+      const response = await fetch('/api/automation/scheduler', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ tasks: [{ id: 'redaction', name: 'Redaction' }, { id: 'consents', name: 'Consent Automation' }, { id: 'exports', name: 'Export Packaging' }], intervalMs: 15000 })
+      });
+      const result = await response.json();
+      const output = document.getElementById('automation-output');
+      output.innerHTML = `
+        <h3>Automation Status</h3>
+        <p>Execution: ${result.schedulerRun.executed ? 'Completed' : 'Pending'}</p>
+        <p>Run count: ${result.schedulerRun.runCount}</p>
+        <p>Next interval: ${result.schedulerState.intervalMs}ms</p>
+        <ul>${result.schedulerRun.tasks.map((task) => '<li>' + task.name + ' — ' + task.status + '</li>').join('')}</ul>
+      `;
+    }
+  </script>
+</body>
+</html>

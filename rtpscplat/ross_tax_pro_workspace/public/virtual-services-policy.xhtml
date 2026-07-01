@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ROSS TAX PRO | Virtual Services Policy</title>
+  <link rel="stylesheet" type="text/css" href="../assets/theme.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="index.xhtml">
+        <div class="brand-mark">VP</div>
+        <div>
+          <h1>Virtual Services Policy</h1>
+          <p>Policy requirements, handling procedures, explanations, and elaborations</p>
+        </div>
+      </a>
+      <nav class="nav-links">
+        <a href="index.xhtml">Home</a>
+        <a href="compliance-center.xhtml">Compliance Center</a>
+      </nav>
+    </header>
+    <main class="page-content">
+      <section class="card">
+        <h2>Virtual Services Governance</h2>
+        <p>This module explains all policy requirements for virtual services and handling controls in detailed, operational form.</p>
+        <div class="hero-actions">
+          <button class="btn primary" type="button" onclick="loadVirtualPolicy()">Load Policy Requirements</button>
+          <button class="btn secondary" type="button" onclick="exportVirtualPolicy()">Export Policy Packet</button>
+        </div>
+        <div id="virtual-policy-output" class="ai-output"></div>
+      </section>
+    </main>
+  </div>
+  <script type="text/javascript">
+    async function loadVirtualPolicy() {
+      const response = await fetch('/api/compliance/virtual-services/policy');
+      const data = await response.json();
+      const output = document.getElementById('virtual-policy-output');
+
+      output.innerHTML = `
+        <h3>${data.title}</h3>
+        <p>Version: ${data.version} | Status: ${data.status}</p>
+        <h4>Policy Requirements and Explanations</h4>
+        <ul>${data.policyRequirements.map((item) => '<li><strong>' + item.requirement + '</strong><br />Explanation: ' + item.explanation + '</li>').join('')}</ul>
+        <h4>Handling Procedures</h4>
+        ${data.handlingProcedures.map((phase) => '<h5>' + phase.phase + '</h5><ul>' + phase.steps.map((step) => '<li>' + step + '</li>').join('') + '</ul>').join('')}
+        <h4>Virtual Services Catalog</h4>
+        <ul>${data.virtualServiceCatalog.map((item) => '<li>' + item.code + ' - ' + item.name + ' | Class: ' + item.classification + ' | Control: ' + item.controlLevel + '</li>').join('')}</ul>
+        <h4>Elaborations</h4>
+        <ul>${data.elaborations.map((item) => '<li>' + item + '</li>').join('')}</ul>
+      `;
+    }
+
+    async function exportVirtualPolicy() {
+      const response = await fetch('/api/compliance/virtual-services/export');
+      const data = await response.json();
+      const output = document.getElementById('virtual-policy-output');
+      output.innerHTML = `
+        <h3>Policy Export Ready</h3>
+        <p><strong>Filename:</strong> ${data.filename}</p>
+        <pre>${data.text}</pre>
+      `;
+    }
+  </script>
+</body>
+</html>

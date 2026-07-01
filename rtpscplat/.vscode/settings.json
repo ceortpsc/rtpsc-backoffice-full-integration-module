@@ -1,0 +1,17 @@
+{
+    "files.associations": {
+        "*.xhtml": "xml",
+        "*.sql": "sql"
+    },
+    "editor.formatOnSave": true,
+    "editor.tabSize": 4,
+    "editor.insertSpaces": true,
+    "terminal.integrated.defaultProfile.windows": "WSL",
+    "sqltools.connections": [
+        {
+            "name": "Vantage Core (SQLite)",
+            "driver": "SQLite",
+            "database": "${workspaceFolder}/ross_tax_pro.db"
+        }
+    ]
+}

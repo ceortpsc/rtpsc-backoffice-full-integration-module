@@ -1,0 +1,23 @@
+{
+    "OAuthConfig": {
+        "AuthorizeEndpoint": "https://auth.rosstaxpro-cloud.com/oauth2/v2/authorize",
+        "TokenEndpoint": "https://auth.rosstaxpro-cloud.com/oauth2/v2/token",
+        "ClientId": "ero_client_prod_7719a8bc4",
+        "Scope": "openid profile workflow.mef statutory.7216",
+        "RedirectUri": "https://workspace.rosstaxpro.com/console.xhtml"
+    },
+    "OfficeMetadata": {
+        "FirmIdentity": "ROSS TAX PRO SOFTWARE CO.",
+        "EFIN": "748335",
+        "PTIN": "P001482948",
+        "EnvironmentCluster": "PROD-TX-CORE-04"
+    },
+    "WorkflowModules": [
+        "ReturnEditor",
+        "EfileCenter",
+        "BankProducts",
+        "EnvelopeCreator",
+        "SignaturePad",
+        "MefCenter"
+    ]
+}

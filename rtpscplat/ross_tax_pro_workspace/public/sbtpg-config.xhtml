@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ROSS TAX PRO | SBTPG Configuration</title>
+  <link rel="stylesheet" type="text/css" href="../assets/theme.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="index.xhtml">
+        <div class="brand-mark">RTP</div>
+        <div>
+          <h1>ROSS TAX PRO</h1>
+          <p>SBTPG sync, credential, and environment configuration</p>
+        </div>
+      </a>
+      <nav class="nav-links">
+        <a href="index.xhtml">Home</a>
+        <a href="finance-hub.xhtml">Finance Hub</a>
+      </nav>
+    </header>
+    <main class="page-content">
+      <section class="card">
+        <h2>SBTPG and Creditail Configuration</h2>
+        <p>Credentials and environment settings are exposed via environment variables for secure synchronization and admin owner control.</p>
+        <div class="hero-actions">
+          <button class="btn primary" type="button" onclick="loadConfig()">Load Configuration</button>
+        </div>
+        <div id="config-output" class="ai-output"></div>
+      </section>
+    </main>
+  </div>
+  <script type="text/javascript">
+    async function loadConfig() {
+      const config = await fetch('/api/config/sbtpg').then((response) => response.json());
+      const output = document.getElementById('config-output');
+      output.innerHTML = `
+        <h3>SBTPG Settings</h3>
+        <ul>
+          <li>Username: ${config.sbtpg.username}</li>
+          <li>Environment: ${config.sbtpg.environment}</li>
+          <li>Sync Mode: ${config.sbtpg.syncMode}</li>
+          <li>Admin Owner Username: ${config.sbtpg.adminOwnerUsername}</li>
+          <li>Creditail Username: ${config.sbtpg.creditalUsername}</li>
+          <li>Creditail Email: ${config.sbtpg.creditalEmail}</li>
+          <li>Creditail Admin Email: ${config.sbtpg.creditalAdminEmail}</li>
+        </ul>
+      `;
+    }
+  </script>
+</body>
+</html>

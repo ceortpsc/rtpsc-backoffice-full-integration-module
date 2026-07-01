@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ROSS TAX PRO | Audit Protection Workspace</title>
+  <link rel="stylesheet" type="text/css" href="../assets/theme.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="index.xhtml">
+        <div class="brand-mark">AP</div>
+        <div>
+          <h1>Audit Protection Workspace</h1>
+          <p>Internal ERO operations for notice intake, defense workflow, and attorney oversight</p>
+        </div>
+      </a>
+      <nav class="nav-links">
+        <a href="index.xhtml">Home</a>
+        <a href="efile-center.xhtml">E-File Center</a>
+        <a href="irs-taxpro.xhtml">IRS TaxPro</a>
+      </nav>
+    </header>
+    <main class="page-content">
+      <section class="card">
+        <h2>Operator Access</h2>
+        <div class="ai-grid">
+          <label>Username<input id="cred-username" type="text" value="condreros" /></label>
+          <label>Password<input id="cred-password" type="password" value="Houston1!" /></label>
+          <label><input id="cred-mfa" type="checkbox" checked="checked" /> MFA verified</label>
+        </div>
+        <div class="hero-actions">
+          <button class="btn primary" type="button" onclick="loadDashboard()">Load Dashboard</button>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Notice Intake Panel</h2>
+        <p>Auto-creates IRS notice, workspace case, assigned attorney oversight, AI strategy metadata, and starter task.</p>
+        <div class="ai-grid">
+          <label>Client ID<input id="client-id" type="text" value="client-001" /></label>
+          <label>Office ID<input id="office-id" type="text" value="office-254-kil-ero" /></label>
+          <label>Preparer User ID<input id="preparer-id" type="text" value="auth-ero-001" /></label>
+          <label>Notice type
+            <select id="notice-type">
+              <option value="CP">CP</option>
+              <option value="LTR">LTR</option>
+            </select>
+          </label>
+          <label>Notice code
+            <select id="notice-code">
+              <option value="CP2000">CP2000</option>
+              <option value="CP501">CP501</option>
+              <option value="LTR12C">LTR12C</option>
+            </select>
+          </label>
+          <label>Tax year<input id="tax-year" type="number" value="2025" /></label>
+          <label>Received date<input id="received-date" type="date" value="2026-07-01" /></label>
+          <label>Due date<input id="due-date" type="date" value="2026-07-15" /></label>
+          <label>Risk level
+            <select id="risk-level">
+              <option value="low">Low</option>
+              <option value="medium" selected="selected">Medium</option>
+              <option value="high">High</option>
+            </select>
+          </label>
+        </div>
+        <div class="hero-actions">
+          <button class="btn secondary" type="button" onclick="runNoticeIntake()">Run Notice Intake</button>
+          <button class="btn tertiary" type="button" onclick="loadOpenNotices()">Load Open Notices</button>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Response Drafting Panel</h2>
+        <div class="ai-grid">
+          <label>IRS Notice ID<input id="response-notice-id" type="text" placeholder="notice-..." /></label>
+          <label>Response Stage
+            <select id="response-stage">
+              <option value="PRE_DEFENSE">PRE_DEFENSE</option>
+              <option value="FORMAL_DEFENSE">FORMAL_DEFENSE</option>
+              <option value="APPEAL">APPEAL</option>
+            </select>
+          </label>
+          <label>Delivery Method
+            <select id="delivery-method">
+              <option value="MAIL">MAIL</option>
+              <option value="FAX">FAX</option>
+              <option value="IRS_PORTAL">IRS_PORTAL</option>
+            </select>
+          </label>
+        </div>
+        <label>Draft text
+          <textarea id="draft-text" rows="4">Draft response text generated with AI and reviewed by preparer...</textarea>
+        </label>
+        <div class="hero-actions">
+          <button class="btn secondary" type="button" onclick="createDraftResponse()">Create Draft Response</button>
+          <button class="btn tertiary" type="button" onclick="renderTemplate()">Render CP/LTR Template</button>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>E-File Add-On Linkage</h2>
+        <p>Attach active audit protection to transmission for automated defense routing.</p>
+        <div class="ai-grid">
+          <label>Transmission ID<input id="transmission-id" type="text" value="tx-demo-001" /></label>
+          <label>Audit Protection ID<input id="protection-id" type="text" value="cap-001" /></label>
+        </div>
+        <div class="hero-actions">
+          <button class="btn primary" type="button" onclick="createTransmission()">Create Transmission Link</button>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Workspace Output</h2>
+        <div id="workspace-output" class="ai-output"></div>
+      </section>
+    </main>
+  </div>
+  <script type="text/javascript">
+    function credentials() {
+      return {
+        username: document.getElementById('cred-username').value,
+        password: document.getElementById('cred-password').value,
+        mfaVerified: document.getElementById('cred-mfa').checked
+      };
+    }
+
+    function setOutput(html) {
+      document.getElementById('workspace-output').innerHTML = html;
+    }
+
+    async function loadDashboard() {
+      const response = await fetch('/api/audit-defense/dashboard', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ credentials: credentials() })
+      });
+      const payload = await response.json();
+      if (!response.ok) {
+        setOutput('<h3>Access Denied</h3><p>' + payload.error + '</p>');
+        return;
+      }
+
+      setOutput(
+        '<h3>Dashboard Metrics</h3>' +
+        '<p>Attorney: ' + payload.dashboard.attorney.fullName + '</p>' +
+        '<ul>' +
+        '<li>Active Cases: ' + payload.dashboard.metrics.activeCases + '</li>' +
+        '<li>Open Notices: ' + payload.dashboard.metrics.noticesRequiringResponse + '</li>' +
+        '<li>Deadlines Approaching: ' + payload.dashboard.metrics.deadlinesApproaching + '</li>' +
+        '<li>Attorney Workload: ' + payload.dashboard.metrics.attorneyWorkload + '</li>' +
+        '<li>Pending Tasks: ' + payload.dashboard.metrics.pendingTasks + '</li>' +
+        '<li>High Risk Cases: ' + payload.dashboard.metrics.highRiskCases + '</li>' +
+        '</ul>'
+      );
+    }
+
+    async function runNoticeIntake() {
+      const response = await fetch('/api/audit-defense/intake', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          credentials: credentials(),
+          clientId: document.getElementById('client-id').value,
+          officeId: document.getElementById('office-id').value,
+          assignedPreparerId: document.getElementById('preparer-id').value,
+          noticeType: document.getElementById('notice-type').value,
+          noticeCode: document.getElementById('notice-code').value,
+          taxYear: Number(document.getElementById('tax-year').value),
+          receivedDate: document.getElementById('received-date').value,
+          dueDate: document.getElementById('due-date').value,
+          riskLevel: document.getElementById('risk-level').value
+        })
+      });
+      const payload = await response.json();
+      if (!response.ok) {
+        setOutput('<h3>Notice Intake Failed</h3><p>' + payload.error + '</p>');
+        return;
+      }
+
+      const workflow = payload.workflow;
+      document.getElementById('response-notice-id').value = workflow.notice.id;
+      setOutput(
+        '<h3>Notice Intake Completed</h3>' +
+        '<p>Attorney Assigned: ' + workflow.defaultAttorney.fullName + '</p>' +
+        '<p>Notice: ' + workflow.notice.notice_code + ' (' + workflow.notice.id + ')</p>' +
+        '<p>Case: ' + workflow.workspaceCase.id + ' | Task: ' + workflow.task.task_label + '</p>' +
+        '<p>AI Strategy: ' + workflow.aiStrategyMetadata.recommended_strategy + ' | Risk: ' + workflow.aiStrategyMetadata.risk_level + '</p>'
+      );
+    }
+
+    async function loadOpenNotices() {
+      const cred = credentials();
+      const query = '?username=' + encodeURIComponent(cred.username) + '&password=' + encodeURIComponent(cred.password) + '&mfaVerified=' + String(cred.mfaVerified);
+      const response = await fetch('/api/audit-defense/notices/open' + query);
+      const payload = await response.json();
+      if (!response.ok) {
+        setOutput('<h3>Open Notices Load Failed</h3><p>' + payload.error + '</p>');
+        return;
+      }
+
+      setOutput(
+        '<h3>Open Notices</h3><ul>' +
+        payload.notices.map(function (notice) {
+          return '<li>' + notice.notice_code + ' | Client ' + notice.client_id + ' | Due ' + (notice.due_date || 'N/A') + '</li>';
+        }).join('') +
+        '</ul>'
+      );
+    }
+
+    async function createDraftResponse() {
+      const response = await fetch('/api/audit-defense/responses', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          credentials: credentials(),
+          irsNoticeId: document.getElementById('response-notice-id').value,
+          preparedByUserId: document.getElementById('preparer-id').value,
+          overseenByAttorneyId: 'attorney-edward-urquhart',
+          responseStage: document.getElementById('response-stage').value,
+          draftText: document.getElementById('draft-text').value,
+          deliveryMethod: document.getElementById('delivery-method').value,
+          aiAssistMetadata: {
+            model: 'andreaa-defense-v1',
+            risk_level: document.getElementById('risk-level').value,
+            notice_code: document.getElementById('notice-code').value,
+            recommended_strategy: 'income mismatch reconciliation',
+            auto_deadline: document.getElementById('due-date').value
+          }
+        })
+      });
+      const payload = await response.json();
+      if (!response.ok) {
+        setOutput('<h3>Draft Creation Failed</h3><p>' + payload.error + '</p>');
+        return;
+      }
+
+      setOutput('<h3>Draft Created</h3><p>Response ID: ' + payload.responseDraft.id + '</p><p>Stage: ' + payload.responseDraft.response_stage + '</p>');
+    }
+
+    async function renderTemplate() {
+      const response = await fetch('/api/audit-defense/letter-templates/render', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          noticeCode: document.getElementById('notice-code').value,
+          taxpayerName: 'Client Audit Case',
+          ssnLast4: '1234',
+          taxYear: Number(document.getElementById('tax-year').value),
+          noticeDate: document.getElementById('received-date').value,
+          factsSummary: 'Facts collected by ERO staff and validated by defense attorney oversight.',
+          requestedRelief: 'Adjust IRS account based on enclosed support and close notice.',
+          preparerName: 'Assigned Preparer',
+          attorneyName: 'Edward Dee Urquhart, Esq.'
+        })
+      });
+      const template = await response.json();
+      if (!response.ok) {
+        setOutput('<h3>Template Render Failed</h3><p>' + template.error + '</p>');
+        return;
+      }
+
+      setOutput('<h3>Template Rendered: ' + template.title + '</h3><pre>' + template.body + '</pre>');
+    }
+
+    async function createTransmission() {
+      const response = await fetch('/api/efile/transmissions', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          credentials: credentials(),
+          id: document.getElementById('transmission-id').value,
+          clientId: document.getElementById('client-id').value,
+          officeId: document.getElementById('office-id').value,
+          status: 'READY',
+          auditProtectionId: document.getElementById('protection-id').value
+        })
+      });
+      const payload = await response.json();
+      if (!response.ok) {
+        setOutput('<h3>Transmission Link Failed</h3><p>' + payload.error + '</p>');
+        return;
+      }
+
+      setOutput(
+        '<h3>Transmission Linked</h3>' +
+        '<p>Transmission: ' + payload.transmission.id + '</p>' +
+        '<p>Audit Protection: ' + payload.transmission.auditProtectionStatus + '</p>' +
+        '<p>Defense Case Auto-Open Eligible: ' + (payload.transmission.defenseCaseAutoOpenEligible ? 'Yes' : 'No') + '</p>'
+      );
+    }
+  </script>
+</body>
+</html>

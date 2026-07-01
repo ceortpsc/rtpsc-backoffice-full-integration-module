@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ROSS TAX PRO | Enterprise Service Catalog</title>
+  <link rel="stylesheet" type="text/css" href="../assets/theme.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="index.xhtml">
+        <div class="brand-mark">SC</div>
+        <div>
+          <h1>Enterprise Service Catalog</h1>
+          <p>55 itemized services with descriptive summaries and detailed explanations</p>
+        </div>
+      </a>
+      <nav class="nav-links">
+        <a href="index.xhtml">Home</a>
+        <a href="finance-hub.xhtml">Finance Hub</a>
+      </nav>
+    </header>
+    <main class="page-content">
+      <section class="card">
+        <h2>Service List</h2>
+        <p>Browse all available services, including premium and luxury offerings with operational explanations.</p>
+        <div class="ai-grid">
+          <label>Search query
+            <input id="service-query" type="text" placeholder="Search by service name, category, tier, or explanation" />
+          </label>
+          <label>Category
+            <input id="service-category" type="text" placeholder="Optional category filter" />
+          </label>
+          <label>Tier
+            <select id="service-tier">
+              <option value="">All tiers</option>
+              <option value="Standard">Standard</option>
+              <option value="Premium">Premium</option>
+              <option value="Luxury">Luxury</option>
+            </select>
+          </label>
+        </div>
+        <div class="hero-actions">
+          <button class="btn primary" type="button" onclick="loadServices()">Load Services</button>
+          <button class="btn secondary" type="button" onclick="searchServicesCatalog()">Search Services</button>
+        </div>
+        <div id="service-output" class="ai-output"></div>
+      </section>
+    </main>
+  </div>
+  <script type="text/javascript">
+    function renderServices(services) {
+      const output = document.getElementById('service-output');
+      output.innerHTML =
+        '<h3>Total Services: ' + services.length + '</h3>' +
+        '<ul>' + services.map(function (item) {
+          return '<li><strong>' + item.code + ' | ' + item.name + '</strong><br />'
+            + 'Category: ' + item.category + ' | Tier: ' + item.tier + '<br />'
+            + 'Summary: ' + item.summary + '<br />'
+            + 'Explanation: ' + item.explanation + '</li>';
+        }).join('') + '</ul>';
+    }
+
+    async function loadServices() {
+      const category = document.getElementById('service-category').value;
+      const tier = document.getElementById('service-tier').value;
+      const query = new URLSearchParams();
+      if (category) query.set('category', category);
+      if (tier) query.set('tier', tier);
+
+      const response = await fetch('/api/finance/services' + (query.toString() ? ('?' + query.toString()) : ''));
+      const data = await response.json();
+      renderServices(data.services || []);
+    }
+
+    async function searchServicesCatalog() {
+      const queryText = document.getElementById('service-query').value;
+      const response = await fetch('/api/finance/services/search', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ query: queryText })
+      });
+      const data = await response.json();
+      renderServices(data.services || []);
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,6 @@
+name = "rtpsc-dashboard-sync"
+main = "src/index.ts"
+compatibility_date = "2026-07-01"
+
+[vars]
+DASHBOARD_NAME = "ROSS TAX PRO"

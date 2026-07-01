@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ROSS TAX PRO | MFA Center</title>
+  <link rel="stylesheet" type="text/css" href="../assets/theme.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="index.xhtml">
+        <div class="brand-mark">MFA</div>
+        <div>
+          <h1>ROSS TAX PRO</h1>
+          <p>In-house multi-factor authentication enrollment</p>
+        </div>
+      </a>
+      <nav class="nav-links">
+        <a href="index.xhtml">Home</a>
+        <a href="compliance-center.xhtml">Compliance</a>
+      </nav>
+    </header>
+
+    <main class="page-content">
+      <section class="card">
+        <h2>MFA Enrollment and Enablement</h2>
+        <p>Register an account and enable TOTP using any free authenticator app such as Google Authenticator, Microsoft Authenticator, or Authy.</p>
+
+        <label for="user-id">User ID</label>
+        <input id="user-id" class="field" type="text" value="owner-1" />
+
+        <label for="username">Username or Email</label>
+        <input id="username" class="field" type="text" value="ceo@rosstaxsoftware.com" />
+
+        <label for="issuer">Issuer</label>
+        <input id="issuer" class="field" type="text" value="ROSS TAX PRO" />
+
+        <div class="hero-actions">
+          <button class="btn primary" type="button" onclick="registerMfa()">Register MFA</button>
+        </div>
+
+        <div id="register-output" class="ai-output"></div>
+
+        <label for="enrollment-id">Enrollment ID</label>
+        <input id="enrollment-id" class="field" type="text" />
+
+        <label for="totp-token">Authenticator Token</label>
+        <input id="totp-token" class="field" type="text" placeholder="6-digit code" />
+
+        <div class="hero-actions">
+          <button class="btn secondary" type="button" onclick="enableMfa()">Enable MFA</button>
+          <button class="btn tertiary" type="button" onclick="verifyMfa()">Verify MFA</button>
+        </div>
+
+        <div id="enable-output" class="ai-output"></div>
+      </section>
+    </main>
+  </div>
+
+  <script type="text/javascript">
+    async function registerMfa() {
+      const payload = {
+        userId: document.getElementById('user-id').value,
+        username: document.getElementById('username').value,
+        issuer: document.getElementById('issuer').value
+      };
+
+      const response = await fetch('/api/auth/mfa/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      const result = await response.json();
+
+      if (result.enrollmentId) {
+        document.getElementById('enrollment-id').value = result.enrollmentId;
+      }
+
+      document.getElementById('register-output').innerHTML = `
+        <h3>Registration</h3>
+        <p>${result.message || 'MFA enrollment created.'}</p>
+        <p><strong>Secret:</strong> ${result.secret || ''}</p>
+        <p><strong>OTP URI:</strong> ${result.otpAuthUri || ''}</p>
+        <p><strong>Backup Codes:</strong> ${(result.backupCodes || []).join(', ')}</p>
+      `;
+    }
+
+    async function enableMfa() {
+      const payload = {
+        enrollmentId: document.getElementById('enrollment-id').value,
+        token: document.getElementById('totp-token').value
+      };
+
+      const response = await fetch('/api/auth/mfa/enable', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      const result = await response.json();
+
+      document.getElementById('enable-output').innerHTML = `
+        <h3>Enablement</h3>
+        <p>Status: ${result.ok ? 'Enabled' : 'Failed'}</p>
+        <p>${result.message || result.reason || ''}</p>
+      `;
+    }
+
+    async function verifyMfa() {
+      const payload = {
+        userId: document.getElementById('user-id').value,
+        token: document.getElementById('totp-token').value
+      };
+
+      const response = await fetch('/api/auth/mfa/verify', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      const result = await response.json();
+
+      document.getElementById('enable-output').innerHTML = `
+        <h3>Verification</h3>
+        <p>Status: ${result.ok ? 'Passed' : 'Failed'}</p>
+        <p>Method: ${result.method || 'N/A'}</p>
+        <p>${result.reason || ''}</p>
+      `;
+    }
+  </script>
+</body>
+</html>

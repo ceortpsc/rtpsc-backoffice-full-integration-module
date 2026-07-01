@@ -1,0 +1,28 @@
+body { margin: 0; font-family: Arial, sans-serif; background: linear-gradient(135deg, #07111f 0%, #16253d 100%); color: #e2e8f0; }
+a { color: #7dd3fc; text-decoration: none; }
+.app-shell { min-height: 100vh; }
+.topbar { display: flex; justify-content: space-between; align-items: center; padding: 20px 28px; background: rgba(2, 6, 23, 0.92); border-bottom: 1px solid #243447; }
+.topbar h1 { margin: 0 0 4px; font-size: 24px; }
+.topbar p { margin: 0; color: #94a3b8; }
+.nav-links { display: flex; flex-wrap: wrap; gap: 8px; }
+.nav-links a { padding: 8px 10px; border-radius: 999px; border: 1px solid #243447; background: #111827; }
+.nav-links a.active, .nav-links a:hover { background: #0f766e; color: white; }
+.page-content { padding: 24px 28px 36px; }
+.hero-card, .card { background: rgba(15, 23, 42, 0.9); border: 1px solid #243447; border-radius: 16px; padding: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+.hero-card { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
+.metrics-grid, .content-grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); margin-top: 18px; }
+.metric { font-size: 32px; font-weight: 700; color: #f8fafc; }
+.table { width: 100%; border-collapse: collapse; }
+.table th, .table td { padding: 10px 8px; border-bottom: 1px solid #243447; text-align: left; }
+.pill-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+.pill { display: inline-block; padding: 6px 10px; border-radius: 999px; font-size: 12px; font-weight: 700; }
+.pill.good { background: #064e3b; color: #6ee7b7; }
+.pill.warning { background: #78350f; color: #fde68a; }
+.form-grid { display: grid; gap: 10px; }
+.form-grid label { display: flex; flex-direction: column; gap: 4px; color: #cbd5e1; }
+.form-grid input, .form-grid select { background: #020617; color: white; border: 1px solid #243447; border-radius: 8px; padding: 8px 10px; }
+.stack { margin: 0; padding-left: 18px; color: #cbd5e1; }
+.btn { padding: 8px 12px; border-radius: 999px; border: 1px solid #243447; background: #020617; color: white; cursor: pointer; }
+.btn.primary { background: #0f766e; }
+.signature-canvas { border: 1px solid #243447; border-radius: 12px; background: white; width: 100%; max-width: 520px; display: block; }
+.stamp-preview { border: 1px dashed #38bdf8; border-radius: 12px; padding: 16px; background: rgba(56, 189, 248, 0.08); color: #e2e8f0; }

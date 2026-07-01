@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ROSS TAX PRO | Redaction and Encryption Center</title>
+  <link rel="stylesheet" type="text/css" href="../assets/theme.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="index.xhtml">
+        <div class="brand-mark">RTP</div>
+        <div>
+          <h1>ROSS TAX PRO</h1>
+          <p>Redaction, encryption, publication compliance, and automated execution</p>
+        </div>
+      </a>
+      <nav class="nav-links">
+        <a href="index.xhtml">Home</a>
+        <a href="compliance-center.xhtml">Compliance</a>
+      </nav>
+    </header>
+    <main class="page-content">
+      <section class="card">
+        <h2>Automated Redaction and Encryption Workflow</h2>
+        <p>Apply IRS publication and disclosure safeguards, encrypt documents, and execute the workflow automatically.</p>
+        <div class="ai-grid">
+          <label>Document name<input id="doc-name" value="1040" /></label>
+          <label>Encrypt<input id="encrypt" type="checkbox" checked="checked" /></label>
+        </div>
+        <div class="hero-actions">
+          <button class="btn primary" type="button" onclick="runRedactionWorkflow()">Execute Workflow</button>
+          <button class="btn secondary" type="button" onclick="runBackgroundWorkflow()">Run Background Workflow</button>
+        </div>
+        <div id="redaction-output" class="ai-output"></div>
+      </section>
+    </main>
+  </div>
+  <script type="text/javascript">
+    async function runRedactionWorkflow() {
+      const payload = {
+        documents: [{ name: document.getElementById('doc-name').value }],
+        encrypt: document.getElementById('encrypt').checked
+      };
+      const response = await fetch('/api/compliance/redaction', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      const result = await response.json();
+      const output = document.getElementById('redaction-output');
+      output.innerHTML = `
+        <h3>${result.workflow.workflow}</h3>
+        <p>Status: ${result.workflow.status}</p>
+        <p>Encryption mode: ${result.workflow.encryptionMode}</p>
+        <ul>${result.workflow.documents.map((document) => '<li>' + document.name + ' — ' + document.status + '</li>').join('')}</ul>
+        <p>Requirements: ${result.bundle.requirements.join(' | ')}</p>
+      `;
+    }
+
+    async function runBackgroundWorkflow() {
+      const response = await fetch('/api/compliance/background-workflow', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ queue: [{ id: 1, type: 'Redaction' }], intervalMs: 5000 })
+      });
+      const result = await response.json();
+      const output = document.getElementById('redaction-output');
+      output.innerHTML = `
+        <h3>Background Workflow</h3>
+        <p>Status: ${result.workflowState.status}</p>
+        <p>Execution mode: ${result.workflowState.executionMode}</p>
+        <p>${result.workflow.message}</p>
+      `;
+    }
+  </script>
+</body>
+</html>

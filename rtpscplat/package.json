@@ -1,0 +1,29 @@
+{
+  "name": "rtpscplat",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Static workspace preview tooling for the ROSS TAX PRO enterprise scaffold",
+  "scripts": {
+    "start": "http-server ross_tax_pro_workspace/public -p 8080 -o",
+    "dev": "http-server ross_tax_pro_workspace/public -p 8080",
+    "test": "node --test test/*.test.js",
+    "dashboard:install": "npm install --prefix rtpsc-dashboard",
+    "dashboard:dev": "npm run dev --prefix rtpsc-dashboard",
+    "dashboard:build": "npm run build --prefix rtpsc-dashboard",
+    "cf:sync": "node scripts/cloudflare-sync.mjs",
+    "cf:pages:deploy": "node scripts/cloudflare-pages-deploy.mjs",
+    "cf:pages:domain": "node scripts/cloudflare-pages-domain.mjs",
+    "cf:worker:deploy": "wrangler deploy --config workers/dashboard-sync/wrangler.toml",
+    "cf:deploy": "npm run cf:pages:deploy && npm run cf:worker:deploy",
+    "cf:enable": "node scripts/cloudflare-enable.mjs",
+    "cf:dev": "concurrently \"npm run dashboard:dev\" \"wrangler dev --config workers/dashboard-sync/wrangler.toml\""
+  },
+  "devDependencies": {
+    "concurrently": "^9.0.1",
+    "http-server": "^14.1.1",
+    "wrangler": "^3.99.0"
+  },
+  "dependencies": {
+    "sqlite3": "^6.0.1"
+  }
+}

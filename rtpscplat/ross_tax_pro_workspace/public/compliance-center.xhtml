@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ROSS TAX PRO | Compliance Center</title>
+  <link rel="stylesheet" type="text/css" href="../assets/theme.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="index.xhtml">
+        <div class="brand-mark">RTP</div>
+        <div>
+          <h1>ROSS TAX PRO</h1>
+          <p>Compliance center and policy operations</p>
+        </div>
+      </a>
+      <nav class="nav-links">
+        <a href="index.xhtml">Home</a>
+        <a href="dashboard.xhtml">Portal</a>
+        <a href="virtual-services-policy.xhtml">Virtual Services Policy</a>
+        <a href="publication-updates.xhtml">Publication Updates</a>
+      </nav>
+    </header>
+    <main class="page-content">
+      <section class="card">
+        <h2>Systems, Enforcement, Monitoring, and Kill Switches</h2>
+        <p>All schema tables, workflow rules, RBAC controls, alert notifications, and compliance procedures are configured and enabled for live operations.</p>
+        <div class="hero-actions">
+          <button class="btn primary" type="button" onclick="loadComplianceCenter()">Load Compliance Center</button>
+          <button class="btn secondary" type="button" onclick="exportComplianceBundle()">Export Full Compliance Packet</button>
+          <a class="btn tertiary" href="virtual-services-policy.xhtml">Open Virtual Services Policy</a>
+          <a class="btn tertiary" href="publication-updates.xhtml">Open Publication Updates</a>
+        </div>
+        <div class="ai-grid" style="margin-top: 16px;">
+          <label>Taxpayer name<input id="consent-name" placeholder="Enter taxpayer name" /></label>
+          <label>Taxpayer ID<input id="consent-id" placeholder="Enter taxpayer ID" /></label>
+          <label>Email<input id="consent-email" placeholder="Enter email address" /></label>
+          <label>Service type<input id="consent-service" placeholder="Enter service type" /></label>
+          <label>Date<input id="consent-date" placeholder="YYYY-MM-DD" /></label>
+        </div>
+        <div class="hero-actions">
+          <button class="btn tertiary" type="button" onclick="generateConsentPacket()">Generate Consent Packet</button>
+        </div>
+        <div id="compliance-output" class="ai-output"></div>
+      </section>
+    </main>
+  </div>
+  <script type="text/javascript">
+    async function loadComplianceCenter() {
+      const response = await fetch('/api/compliance/overview');
+      const data = await response.json();
+      const output = document.getElementById('compliance-output');
+      output.innerHTML = `
+        <h3>Monitoring</h3>
+        <p>Status: ${data.monitoring.status} | Alerts: ${data.monitoring.alerts} | Channels: ${data.monitoring.channels.join(', ')}</p>
+        <h3>Kill Switches</h3>
+        <ul>${data.killSwitches.map((item) => '<li>' + item.label + ' (' + (item.active ? 'Active' : 'Inactive') + ')</li>').join('')}</ul>
+        <h3>Controls</h3>
+        <ul>${data.controls.map((item) => '<li>' + item.label + ' (' + (item.enabled ? 'Enabled' : 'Disabled') + ')</li>').join('')}</ul>
+        <h3>Policies and Procedures</h3>
+        <ul>${data.policyBundle.map((policy) => '<li><strong>' + policy.title + '</strong>: ' + policy.summary + '</li>').join('')}${data.procedures.map((procedure) => '<li>' + procedure + '</li>').join('')}</ul>
+      `;
+    }
+
+    async function exportComplianceBundle() {
+      const response = await fetch('/api/compliance/export', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ title: 'Compliance Packet' })
+      });
+      const data = await response.json();
+      const output = document.getElementById('compliance-output');
+      output.innerHTML = `
+        <h3>Export Ready</h3>
+        <p>HTML packet generated and local document export is ready.</p>
+        <p><strong>Filename:</strong> ${data.filename}</p>
+        <pre>${data.text}</pre>
+      `;
+    }
+
+    async function generateConsentPacket() {
+      const payload = {
+        taxpayerName: document.getElementById('consent-name').value,
+        taxpayerId: document.getElementById('consent-id').value,
+        email: document.getElementById('consent-email').value,
+        serviceType: document.getElementById('consent-service').value,
+        consentDate: document.getElementById('consent-date').value
+      };
+      const response = await fetch('/api/compliance/consents', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      const data = await response.json();
+      const output = document.getElementById('compliance-output');
+      output.innerHTML = `
+        <h3>Taxpayer Consent Packet Generated</h3>
+        <p><strong>Filename:</strong> ${data.filename}</p>
+        <pre>${data.text}</pre>
+      `;
+    }
+  </script>
+</body>
+</html>

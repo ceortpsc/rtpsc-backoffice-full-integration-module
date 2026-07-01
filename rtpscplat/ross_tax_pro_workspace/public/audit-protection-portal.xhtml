@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ROSS TAX PRO | Client Audit Protection Portal</title>
+  <link rel="stylesheet" type="text/css" href="../assets/theme.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="index.xhtml">
+        <div class="brand-mark">CP</div>
+        <div>
+          <h1>Client Audit Protection Portal</h1>
+          <p>Client-facing status for protection coverage, attorney assignment, and case updates</p>
+        </div>
+      </a>
+      <nav class="nav-links">
+        <a href="index.xhtml">Home</a>
+        <a href="dashboard.xhtml">Portal</a>
+      </nav>
+    </header>
+    <main class="page-content">
+      <section class="card">
+        <h2>Portal Access</h2>
+        <div class="ai-grid">
+          <label>Client portal username<input id="portal-username" type="text" value="client.1040.2026.0001" /></label>
+          <label>Client portal password<input id="portal-password" type="password" value="Houston1!" /></label>
+          <label>Client ID<input id="portal-client-id" type="text" value="client-001" /></label>
+          <label><input id="portal-mfa" type="checkbox" checked="checked" /> MFA verified</label>
+        </div>
+        <div class="hero-actions">
+          <button class="btn primary" type="button" onclick="loadPortalSummary()">Load Audit Protection Summary</button>
+        </div>
+        <div id="portal-output" class="ai-output"></div>
+      </section>
+    </main>
+  </div>
+  <script type="text/javascript">
+    async function loadPortalSummary() {
+      const username = document.getElementById('portal-username').value;
+      const password = document.getElementById('portal-password').value;
+      const clientId = document.getElementById('portal-client-id').value;
+      const mfaVerified = document.getElementById('portal-mfa').checked;
+      const query =
+        '?username=' + encodeURIComponent(username)
+        + '&password=' + encodeURIComponent(password)
+        + '&mfaVerified=' + String(mfaVerified)
+        + '&clientId=' + encodeURIComponent(clientId);
+
+      const response = await fetch('/api/client-portal/audit-protection' + query);
+      const payload = await response.json();
+      const output = document.getElementById('portal-output');
+
+      if (!response.ok) {
+        output.innerHTML = '<h3>Access Denied</h3><p>' + (payload.error || 'Unable to load portal summary.') + '</p>';
+        return;
+      }
+
+      const summary = payload.portalSummary;
+      const protection = summary.protection
+        ? '<p>Plan: ' + summary.protection.planCode + ' (' + summary.protection.planName + '), Status: ' + summary.protection.status + '</p>'
+        : '<p>No active audit protection plan found.</p>';
+
+      output.innerHTML =
+        '<h3>Audit Protection Summary</h3>' +
+        protection +
+        '<p>Assigned Attorney: ' + summary.attorney.fullName + '</p>' +
+        '<h4>Case Updates</h4>' +
+        '<ul>' + summary.cases.map(function (item) {
+          return '<li>' + item.id + ' | Status: ' + item.caseStatus + ' | Notice: ' + (item.primaryNoticeId || 'N/A') + '</li>';
+        }).join('') + '</ul>';
+    }
+  </script>
+</body>
+</html>

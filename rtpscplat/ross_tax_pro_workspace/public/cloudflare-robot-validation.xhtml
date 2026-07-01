@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ROSS TAX PRO | Cloudflare Robot Validation</title>
+  <link rel="stylesheet" type="text/css" href="../assets/theme.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="index.xhtml">
+        <div class="brand-mark">CF</div>
+        <div>
+          <h1>Cloudflare Robot Validation</h1>
+          <p>Turnstile token configuration and verification panel</p>
+        </div>
+      </a>
+      <nav class="nav-links">
+        <a href="index.xhtml">Home</a>
+        <a href="compliance-center.xhtml">Compliance</a>
+      </nav>
+    </header>
+    <main class="page-content">
+      <section class="card">
+        <h2>Robot Validation</h2>
+        <p>Use this panel to validate Cloudflare anti-bot token checks and confirm configuration status.</p>
+        <div class="ai-grid">
+          <label>Turnstile token
+            <input id="cf-token" type="text" placeholder="Paste token from client-side challenge" />
+          </label>
+          <label>Remote IP (optional)
+            <input id="cf-remoteip" type="text" placeholder="127.0.0.1" />
+          </label>
+        </div>
+        <div class="hero-actions">
+          <button class="btn primary" type="button" onclick="loadConfig()">Load Cloudflare Config</button>
+          <button class="btn secondary" type="button" onclick="validateToken()">Validate Robot Token</button>
+        </div>
+        <div id="cf-output" class="ai-output"></div>
+      </section>
+    </main>
+  </div>
+
+  <script type="text/javascript">
+    async function loadConfig() {
+      const response = await fetch('/api/security/cloudflare/robot/config');
+      const config = await response.json();
+      const output = document.getElementById('cf-output');
+      output.innerHTML = `
+        <h3>Cloudflare Robot Config</h3>
+        <p>Provider: ${config.provider}</p>
+        <p>Mode: ${config.mode}</p>
+        <p>Site Key Configured: ${config.hasSiteKey ? 'Yes' : 'No'}</p>
+        <p>Secret Key Configured: ${config.hasSecretKey ? 'Yes' : 'No'}</p>
+      `;
+    }
+
+    async function validateToken() {
+      const token = document.getElementById('cf-token').value;
+      const remoteip = document.getElementById('cf-remoteip').value;
+
+      const response = await fetch('/api/security/cloudflare/robot/validate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ token: token, remoteip: remoteip })
+      });
+      const result = await response.json();
+
+      const output = document.getElementById('cf-output');
+      output.innerHTML = `
+        <h3>Validation Result</h3>
+        <p>Valid: ${result.ok ? 'Yes' : 'No'}</p>
+        <p>Provider: ${result.provider || 'N/A'}</p>
+        <p>Reason: ${result.reason || 'N/A'}</p>
+        <p>Error Codes: ${(result.errorCodes || []).join(', ') || 'None'}</p>
+        <p>Hostname: ${result.hostname || 'N/A'}</p>
+      `;
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ROSS TAX PRO | White-Label Finance Hub</title>
+  <link rel="stylesheet" type="text/css" href="../assets/theme.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="index.xhtml">
+        <div class="brand-mark">RTP</div>
+        <div>
+          <h1>ROSS TAX PRO</h1>
+          <p>White-label finance hub and compliance automation</p>
+        </div>
+      </a>
+      <nav class="nav-links">
+        <a href="index.xhtml">Home</a>
+        <a href="compliance-center.xhtml">Compliance</a>
+      </nav>
+    </header>
+    <main class="page-content">
+      <section class="card">
+        <h2>White-Label Finance Hub</h2>
+        <p>Automate ledger posting, reconciliation, workpaper generation, registry creation, and branded reporting for all financial flows, withholdings, and client accounts.</p>
+        <div class="hero-actions">
+          <button class="btn primary" type="button" onclick="loadFinanceOverview()">Load Finance Overview</button>
+          <a class="btn secondary" href="service-catalog.xhtml">Open Service Catalog</a>
+        </div>
+        <div class="ai-grid" style="margin-top: 16px;">
+          <label>Client ID<input id="pg-client-id" type="text" value="client-001" /></label>
+          <label>Taxpayer name<input id="pg-taxpayer-name" type="text" value="Jane Client" /></label>
+          <label>Bank product code<input id="pg-bank-code" type="text" value="SBTPG-RT" /></label>
+          <label>Bank product name<input id="pg-bank-name" type="text" value="Refund Transfer" /></label>
+          <label>Preparation fee<input id="pg-prep-fee" type="number" value="349" /></label>
+          <label>Transmission fee<input id="pg-transmission-fee" type="number" value="79" /></label>
+          <label>Bank product fee<input id="pg-bank-fee" type="number" value="45" /></label>
+          <label>Audit protection fee<input id="pg-protection-fee" type="number" value="99" /></label>
+          <label>Convenience fee<input id="pg-convenience-fee" type="number" value="15" /></label>
+          <label>Tax rate (%)<input id="pg-tax-rate" type="number" value="8.25" /></label>
+          <label><input id="pg-agreement-signed" type="checkbox" checked="checked" /> Service agreement signed</label>
+          <label><input id="pg-consent-signed" type="checkbox" checked="checked" /> Consent signed</label>
+          <label><input id="pg-disclosure-accepted" type="checkbox" checked="checked" /> Bank disclosure accepted</label>
+          <label><input id="pg-charge-accepted" type="checkbox" checked="checked" /> Charge authorization accepted</label>
+        </div>
+        <div class="hero-actions">
+          <button class="btn secondary" type="button" onclick="runPaymentGatePrefile()">Run Payment Gate Prefile</button>
+        </div>
+        <div class="ai-grid" style="margin-top: 16px;">
+          <label>Invoice total<input id="rc-invoice-total" type="number" value="587.03" /></label>
+          <label>Settled amount<input id="rc-settled-amount" type="number" value="587.03" /></label>
+          <label>Bank deposit amount<input id="rc-bank-deposit" type="number" value="572.03" /></label>
+          <label>Processing fees<input id="rc-processing-fees" type="number" value="15" /></label>
+        </div>
+        <div class="hero-actions">
+          <button class="btn tertiary" type="button" onclick="runFinanceReconciliationTools()">Run Reconciliation Tools</button>
+        </div>
+        <div id="finance-output" class="ai-output"></div>
+      </section>
+    </main>
+  </div>
+  <script type="text/javascript">
+    async function loadFinanceOverview() {
+      const overview = await fetch('/api/finance/overview').then((response) => response.json());
+      const output = document.getElementById('finance-output');
+      output.innerHTML = `
+        <h3>${overview.branding.moduleName}</h3>
+        <p>Brand: ${overview.branding.companyName} | Theme: ${overview.branding.theme}</p>
+        <h4>Controls</h4>
+        <ul>${overview.controls.map((control) => '<li>' + control.label + ' (' + (control.enabled ? 'Enabled' : 'Disabled') + ')</li>').join('')}</ul>
+        <h4>Compliance</h4>
+        <ul>${overview.compliance.irsRequirements.map((item) => '<li>' + item + '</li>').join('')}<li>Enforcement: ${overview.compliance.enforcement}</li><li>Retention: ${overview.compliance.retention}</li></ul>
+      `;
+    }
+
+    async function runPaymentGatePrefile() {
+      const payload = {
+        clientId: document.getElementById('pg-client-id').value,
+        taxpayerName: document.getElementById('pg-taxpayer-name').value,
+        bankProductCode: document.getElementById('pg-bank-code').value,
+        bankProductName: document.getElementById('pg-bank-name').value,
+        preparationFee: Number(document.getElementById('pg-prep-fee').value),
+        transmissionFee: Number(document.getElementById('pg-transmission-fee').value),
+        bankProductFee: Number(document.getElementById('pg-bank-fee').value),
+        protectionFee: Number(document.getElementById('pg-protection-fee').value),
+        convenienceFee: Number(document.getElementById('pg-convenience-fee').value),
+        taxRate: Number(document.getElementById('pg-tax-rate').value),
+        serviceAgreementSigned: document.getElementById('pg-agreement-signed').checked,
+        consentBundleSigned: document.getElementById('pg-consent-signed').checked,
+        bankDisclosureAccepted: document.getElementById('pg-disclosure-accepted').checked,
+        chargeAuthorizationAccepted: document.getElementById('pg-charge-accepted').checked
+      };
+
+      const response = await fetch('/api/finance/payment-gate/prefile', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      const gate = await response.json();
+      const output = document.getElementById('finance-output');
+
+      output.innerHTML = `
+        <h3>Payment Gate Prefile</h3>
+        <p>Gateway: ${gate.paymentGateway.provider} | Environment: ${gate.paymentGateway.environment} | Status: ${gate.paymentGateway.gatewayStatus}</p>
+        <p>Invoice: ${gate.prefileInvoice.invoiceNumber} | Total: $${gate.prefileInvoice.total.toFixed(2)} | Status: ${gate.prefileInvoice.status}</p>
+        <h4>Charges</h4>
+        <ul>${gate.prefileInvoice.charges.map((item) => '<li>' + item.label + ': $' + item.amount.toFixed(2) + '</li>').join('')}</ul>
+        <h4>Agreements and Consents</h4>
+        <ul>
+          <li>Service Agreement Signed: ${gate.agreements.serviceAgreementSigned ? 'Yes' : 'No'}</li>
+          <li>Consent Signed: ${gate.agreements.consentBundleSigned ? 'Yes' : 'No'}</li>
+          <li>Bank Disclosure Accepted: ${gate.agreements.bankDisclosureAccepted ? 'Yes' : 'No'}</li>
+          <li>Charge Authorization Accepted: ${gate.agreements.chargeAuthorizationAccepted ? 'Yes' : 'No'}</li>
+        </ul>
+        <h4>Blocked Reasons</h4>
+        ${gate.blockedReasons.length > 0 ? '<ul>' + gate.blockedReasons.map((item) => '<li>' + item + '</li>').join('') + '</ul>' : '<p>None</p>'}
+      `;
+    }
+
+    async function runFinanceReconciliationTools() {
+      const payload = {
+        invoiceTotal: Number(document.getElementById('rc-invoice-total').value),
+        settledAmount: Number(document.getElementById('rc-settled-amount').value),
+        bankDepositAmount: Number(document.getElementById('rc-bank-deposit').value),
+        processingFees: Number(document.getElementById('rc-processing-fees').value)
+      };
+
+      const response = await fetch('/api/finance/payment-gate/reconcile', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      const result = await response.json();
+      const output = document.getElementById('finance-output');
+
+      output.innerHTML = `
+        <h3>Finance Reconciliation Tools</h3>
+        <p>Status: ${result.reconciliationStatus} | Variance: $${result.variance.toFixed(2)}</p>
+        <h4>Transactions</h4>
+        <ul>${result.transactions.map((item) => '<li>' + item.label + ': $' + item.amount.toFixed(2) + '</li>').join('')}</ul>
+        <h4>Controls</h4>
+        <ul>${result.controls.map((item) => '<li>' + item + '</li>').join('')}</ul>
+        <h4>Recommendations</h4>
+        <ul>${result.recommendations.map((item) => '<li>' + item + '</li>').join('')}</ul>
+      `;
+    }
+  </script>
+</body>
+</html>
