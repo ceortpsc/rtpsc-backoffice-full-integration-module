@@ -20,7 +20,8 @@
     "access:apply": "node scripts/access/apply-access-directory.mjs",
     "access:validate": "node scripts/access/validate-access-directory.mjs",
     "access:rollout": "node scripts/access/rollout-access-directory.mjs",
-    "docs:export:section15": "node scripts/docs/export-section15-volumes.mjs"
+    "docs:export:section15": "node scripts/docs/export-section15-volumes.mjs",
+    "docs:export:publication": "node scripts/docs/export-practitionerhub-publication.mjs"
   },
   "devDependencies": {
     "concurrently": "^9.0.1",

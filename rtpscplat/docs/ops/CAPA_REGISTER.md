@@ -120,3 +120,14 @@
 - Preventive Action: Add appendix-export coverage to the documentation release checklist so every published volume has matching markdown and PDF artifacts.
 - Current Status: Closed
 - Next Action: Extend export automation to cover Section 17 directly.
+
+## Entry CAPA-2026-07-12-007
+
+- Unique ID: CAPA-2026-07-12-007
+- Owner: Condre Dvon Ross
+- Timestamp: 2026-07-12T00:00:00Z
+- Trigger: Need to publish a complete standalone PDF set for all numbered PractitionerHub sections, not just the blueprint volumes.
+- Corrective Action: Added repeatable full-suite export automation and generated Section 01 through Section 17 markdown masters and PDF artifacts.
+- Preventive Action: Require the full-suite publication export command to pass before documentation branch release sign-off.
+- Current Status: Closed
+- Next Action: Integrate publication artifact verification into release checks.
