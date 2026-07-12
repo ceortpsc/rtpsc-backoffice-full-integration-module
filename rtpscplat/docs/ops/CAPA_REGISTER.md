@@ -32,3 +32,14 @@
 - Preventive Action: Require future integration onboarding to include role mapping and permission code registration.
 - Current Status: Closed
 - Next Action: Audit active users against ACCESS_* and MANAGE_INTEGRATIONS permissions.
+
+## Entry CAPA-2026-07-11-004
+
+- Unique ID: CAPA-2026-07-11-004
+- Owner: Condre Dvon Ross
+- Timestamp: 2026-07-11T00:00:00Z
+- Trigger: Complete operational closure required for access-directory rollout phases 2/4 to 4/4.
+- Corrective Action: Executed migration and validated role/integration access mappings in target database.
+- Preventive Action: Require migration execution evidence and mapping summary for all future RBAC changes.
+- Current Status: Closed
+- Next Action: Include validation report reference in PR merge notes.

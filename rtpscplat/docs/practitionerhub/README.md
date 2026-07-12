@@ -23,3 +23,4 @@
 11. [11 - TC Codes Real-Time Sync](./11-tc-codes-sync.md)
 12. [12 - Refund Tracking and Intelligence](./12-refund-intelligence.md)
 13. [13 - Access Control Directory](./13-access-control-directory.md)
+14. [14 - Access Validation Report](./14-access-validation-report.md)
