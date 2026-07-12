@@ -13,8 +13,8 @@ const pdfDir = path.join(exportDir, 'pdf');
 const shouldSkipPdf = process.argv.includes('--skip-pdf') || process.env.EXPORT_SECTION15_SKIP_PDF === '1';
 
 if (!fs.existsSync(sourcePath)) {
-  console.error(`[export] Source file missing: ${sourcePath}`);
-  process.exit(1);
+    console.error(`[export] Source file missing: ${sourcePath}`);
+    process.exit(1);
 }
 
 const source = fs.readFileSync(sourcePath, 'utf8');
@@ -22,29 +22,29 @@ fs.mkdirSync(exportDir, { recursive: true });
 fs.mkdirSync(pdfDir, { recursive: true });
 
 function normalize(content) {
-  return content.replace(/\r\n/g, '\n').trim() + '\n';
+    return content.replace(/\r\n/g, '\n').trim() + '\n';
 }
 
 function getSection(startHeading, endHeading) {
-  const start = source.indexOf(startHeading);
-  if (start === -1) {
-    throw new Error(`Missing start heading: ${startHeading}`);
-  }
+    const start = source.indexOf(startHeading);
+    if (start === -1) {
+        throw new Error(`Missing start heading: ${startHeading}`);
+    }
 
-  const end = endHeading ? source.indexOf(endHeading, start + startHeading.length) : -1;
-  const slice = end === -1 ? source.slice(start) : source.slice(start, end);
-  return normalize(slice);
+    const end = endHeading ? source.indexOf(endHeading, start + startHeading.length) : -1;
+    const slice = end === -1 ? source.slice(start) : source.slice(start, end);
+    return normalize(slice);
 }
 
 function writeVolume(fileName, title, contentBlocks) {
-  const content = [
-    `# ${title}`,
-    '',
-    '> Generated from Section 15 master compendium.',
-    '',
-    ...contentBlocks,
-  ].join('\n');
-  fs.writeFileSync(path.join(exportDir, fileName), normalize(content));
+    const content = [
+        `# ${title}`,
+        '',
+        '> Generated from Section 15 master compendium.',
+        '',
+        ...contentBlocks,
+    ].join('\n');
+    fs.writeFileSync(path.join(exportDir, fileName), normalize(content));
 }
 
 // Primary PDF master source copy
@@ -77,49 +77,49 @@ writeVolume('volume-ux.md', 'RossTax PrimePlatform UX Volume', [control, brand, 
 writeVolume('volume-mathematics.md', 'RossTax PrimePlatform Mathematical Appendix Volume', [control, brand, getSection('## 5. Mathematical and Scientific Rigor Appendix', '## 6. API, Data, and Integration Governance'), references, glossary]);
 
 const volumeFiles = [
-  'section15-master.md',
-  'volume-architecture.md',
-  'volume-security.md',
-  'volume-operations.md',
-  'volume-ux.md',
-  'volume-mathematics.md',
+    'section15-master.md',
+    'volume-architecture.md',
+    'volume-security.md',
+    'volume-operations.md',
+    'volume-ux.md',
+    'volume-mathematics.md',
 ];
 
 console.log('[export] Markdown volume export completed.');
 
 if (shouldSkipPdf) {
-  console.log('[export] PDF conversion skipped by flag (use --skip-pdf or EXPORT_SECTION15_SKIP_PDF=1).');
-  process.exit(0);
+    console.log('[export] PDF conversion skipped by flag (use --skip-pdf or EXPORT_SECTION15_SKIP_PDF=1).');
+    process.exit(0);
 }
 
 function hasCommand(cmd) {
-  const check = process.platform === 'win32'
-    ? spawnSync('where', [cmd], { stdio: 'ignore' })
-    : spawnSync('which', [cmd], { stdio: 'ignore' });
-  return check.status === 0;
+    const check = process.platform === 'win32'
+        ? spawnSync('where', [cmd], { stdio: 'ignore' })
+        : spawnSync('which', [cmd], { stdio: 'ignore' });
+    return check.status === 0;
 }
 
 const pandocAvailable = hasCommand('pandoc');
 if (!pandocAvailable) {
-  console.log('[export] pandoc not found; markdown export completed without PDF conversion.');
-  process.exit(0);
+    console.log('[export] pandoc not found; markdown export completed without PDF conversion.');
+    process.exit(0);
 }
 
 for (const file of volumeFiles) {
-  const input = path.join(exportDir, file);
-  const output = path.join(pdfDir, file.replace(/\.md$/, '.pdf'));
-  const result = spawnSync('pandoc', [input, '-o', output], {
-    stdio: 'inherit',
-    timeout: 120000
-  });
-  if (result.error && result.error.code === 'ETIMEDOUT') {
-    console.error(`[export] PDF conversion timed out for ${file}. Re-run with --skip-pdf to bypass PDF generation.`);
-    process.exit(1);
-  }
-  if (result.status !== 0) {
-    console.error(`[export] PDF conversion failed for ${file}`);
-    process.exit(result.status ?? 1);
-  }
+    const input = path.join(exportDir, file);
+    const output = path.join(pdfDir, file.replace(/\.md$/, '.pdf'));
+    const result = spawnSync('pandoc', [input, '-o', output], {
+        stdio: 'inherit',
+        timeout: 120000
+    });
+    if (result.error && result.error.code === 'ETIMEDOUT') {
+        console.error(`[export] PDF conversion timed out for ${file}. Re-run with --skip-pdf to bypass PDF generation.`);
+        process.exit(1);
+    }
+    if (result.status !== 0) {
+        console.error(`[export] PDF conversion failed for ${file}`);
+        process.exit(result.status ?? 1);
+    }
 }
 
 console.log('[export] Markdown and PDF exports completed.');
