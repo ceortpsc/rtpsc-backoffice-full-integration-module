@@ -11,7 +11,7 @@ The Client Masterfile is the authoritative repository for all client records ass
 ### Client Core Record
 
 | Field | Type | Description |
-|---|---|---|
+| --- | --- | --- |
 | `client_id` | UUID | Internal unique identifier |
 | `efin` | String | 748335 |
 | `tin` | Encrypted | SSN or ITIN (AES-256) |
@@ -37,7 +37,7 @@ The Client Masterfile is the authoritative repository for all client records ass
 ### Filing History Record
 
 | Field | Type | Description |
-|---|---|---|
+| --- | --- | --- |
 | `filing_id` | UUID | Unique filing ID |
 | `client_id` | UUID | Client reference |
 | `tax_year` | Integer | Example: 2025 |
@@ -55,7 +55,7 @@ The Client Masterfile is the authoritative repository for all client records ass
 ### Document Vault
 
 | Document Type | Retention Policy | Encryption |
-|---|---|---|
+| --- | --- | --- |
 | W-2 and 1099 source docs | 7 years | AES-256 |
 | Signed Form 8879 | 7 years | AES-256 |
 | Return copy (PDF) | 7 years | AES-256 |
@@ -68,7 +68,7 @@ The Client Masterfile is the authoritative repository for all client records ass
 ## Masterfile Access Controls
 
 | Operation | Roles Permitted |
-|---|---|
+| --- | --- |
 | View Core Record | Owner, Senior Preparer, Preparer, Reviewer |
 | Edit Core Record | Owner, Senior Preparer |
 | View Filing History | All authenticated roles |

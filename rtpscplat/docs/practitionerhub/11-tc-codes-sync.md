@@ -11,7 +11,7 @@ The TC Codes module provides real-time synchronization of IRS Transaction Codes 
 ### Return and Assessment Codes
 
 | TC | Description | Significance |
-|---|---|---|
+| --- | --- | --- |
 | 150 | Return filed and tax assessed | Return posted to IRS master file |
 | 154 | Filing requirement change | IRS changed filing requirement |
 | 160 | Penalty for failure to file | FTF penalty assessed |
@@ -22,7 +22,7 @@ The TC Codes module provides real-time synchronization of IRS Transaction Codes 
 ### Refund Codes
 
 | TC | Description | Significance |
-|---|---|---|
+| --- | --- | --- |
 | 570 | Additional account action pending | Refund held, investigate |
 | 571 | Resolved hold released | Prior 570 resolved |
 | 572 | Resolved with additional action | Hold resolved with action |
@@ -34,7 +34,7 @@ The TC Codes module provides real-time synchronization of IRS Transaction Codes 
 ### Audit and Examination Codes
 
 | TC | Description | Significance |
-|---|---|---|
+| --- | --- | --- |
 | 420 | Examination indicator | Return under examination |
 | 421 | Examination closed | Audit closed |
 | 424 | Examination request | Examination initiated |
@@ -45,7 +45,7 @@ The TC Codes module provides real-time synchronization of IRS Transaction Codes 
 ### Payment and Collection Codes
 
 | TC | Description | Significance |
-|---|---|---|
+| --- | --- | --- |
 | 610 | Remittance with return | Payment posted with return |
 | 670 | Additional tax payment | Subsequent payment posted |
 | 680 | Deposit interest earned | Interest on deposit |
@@ -89,7 +89,7 @@ tc_sync:
 ### TC Alert Priority Matrix
 
 | TC | Alert Level | Notification | Response Time |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | 570 | Warning | In-app + Email | 24 hours |
 | 810 | Critical | In-app + Email + SMS | 4 hours |
 | 420 | Critical | In-app + Email | 4 hours |

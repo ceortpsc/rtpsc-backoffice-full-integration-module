@@ -27,7 +27,7 @@ PractitionerHub is the central operating platform for tax practitioners working 
 ### Module Registry
 
 | # | Module | Status | Engine Key |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | 01 | eFile Transmission | Active | `ENABLE_EFILE` |
 | 02 | Gateway | Active | `ENABLE_GATEWAY` |
 | 03 | IRS Communication Tunnels | Active | `ENABLE_IRS_TUNNEL` |
@@ -45,7 +45,7 @@ PractitionerHub is the central operating platform for tax practitioners working 
 ### Roles and Permissions Matrix
 
 | Role | Transmission | Client Data | TC Codes | Refund Intel | Admin |
-|---|---|---|---|---|---|
+| --- | --- | --- | --- | --- | --- |
 | Owner (EFIN Holder) | Full | Full | Full | Full | Full |
 | Senior Preparer | Submit | Read/Write | Read | Read | No |
 | Preparer | Stage Only | Read/Write | Read | Read | No |
@@ -82,7 +82,7 @@ ENABLE_BACKGROUND_WORKERS=true
 ### Support and Escalation
 
 | Tier | Contact | Scope |
-|---|---|---|
+| --- | --- | --- |
 | Platform Owner | Condre Dvon Ross | All modules |
 | IRS e-Help Desk | 1-866-255-0654 | MeF, FIRE, A2A |
 | IRS FIRE Support | 1-866-455-7438 | FIRE only |

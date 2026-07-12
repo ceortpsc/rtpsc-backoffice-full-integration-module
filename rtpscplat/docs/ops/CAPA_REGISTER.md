@@ -10,3 +10,14 @@
 - Preventive Action: Require docs/ops update checklist for all future non-trivial documentation or platform changes.
 - Current Status: Closed
 - Next Action: Re-open only if release checks identify content gaps or inconsistencies.
+
+## Entry CAPA-2026-07-11-002
+
+- Unique ID: CAPA-2026-07-11-002
+- Owner: Condre Dvon Ross
+- Timestamp: 2026-07-11T00:00:00Z
+- Trigger: Repeated markdown table style nonconformance detected by lint gate.
+- Corrective Action: Standardized all markdown table separator rows to configured compact style spacing across docs/practitionerhub modules.
+- Preventive Action: Add markdown lint validation as a required pre-push check for documentation branches.
+- Current Status: Closed
+- Next Action: Monitor next docs PR for zero lint regressions.

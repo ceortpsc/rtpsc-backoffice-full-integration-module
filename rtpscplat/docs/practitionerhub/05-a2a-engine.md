@@ -21,7 +21,7 @@ PractitionerHub A2A Engine
 ## Supported Submission Types
 
 | Form | Description | Tax Year Support |
-|---|---|---|
+| --- | --- | --- |
 | 1040 | Individual Income Tax | Current + 2 prior |
 | 1040-SR | Senior Individual | Current + 2 prior |
 | 1040-NR | Nonresident Alien | Current + 2 prior |
@@ -63,7 +63,7 @@ PractitionerHub A2A Engine
 ### Acknowledgment Codes
 
 | Code | Meaning | Next Action |
-|---|---|---|
+| --- | --- | --- |
 | A | Accepted | Notify client and archive |
 | R | Rejected | Parse error codes, correct, resubmit |
 | P | Pending | Poll again in 90 seconds |
@@ -92,7 +92,7 @@ a2a_engine:
 ### Submission Audit Log Fields
 
 | Field | Type | Description |
-|---|---|---|
+| --- | --- | --- |
 | `submission_id` | UUID | Unique per submission |
 | `efin` | String | 748335 |
 | `form_type` | String | 1040, 1120, and others |

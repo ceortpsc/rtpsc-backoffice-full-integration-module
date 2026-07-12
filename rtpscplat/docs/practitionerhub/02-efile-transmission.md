@@ -29,7 +29,7 @@ The eFile Transmission module is the unified orchestration layer that manages th
 ### Pre-Transmission Checks
 
 | Check | Rule | On Failure |
-|---|---|---|
+| --- | --- | --- |
 | SSN/ITIN Format | 9 digits, no dashes | Block |
 | EIN Format | XX-XXXXXXX | Block |
 | EFIN Present | Must match 748335 | Block |
@@ -44,7 +44,7 @@ The eFile Transmission module is the unified orchestration layer that manages th
 ## Transmission Status Codes
 
 | Code | Description | Action Required |
-|---|---|---|
+| --- | --- | --- |
 | `STAGED` | Return queued, not yet sent | None |
 | `TRANSMITTING` | In transit to IRS | Monitor |
 | `ACCEPTED` | IRS accepted return | Notify client |
@@ -70,7 +70,7 @@ The eFile Transmission module is the unified orchestration layer that manages th
 ### Common Rejection Codes
 
 | IRS Code | Description | Common Fix |
-|---|---|---|
+| --- | --- | --- |
 | R0000-504 | Duplicate SSN on return | Verify SSN, check prior filing |
 | R0000-902 | EFIN not active | Verify IRS e-Services |
 | IND-031 | Prior year AGI mismatch | Correct AGI from prior return |

@@ -32,7 +32,7 @@ The Gateway is the unified API entry point for all PractitionerHub services. It 
 ## Route Definitions
 
 | Route Prefix | Target Engine | Auth Required | Rate Limit |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `/api/efile` | eFile Transmission | Bearer + EFIN scope | 60/min |
 | `/api/refund` | Refund Intelligence | Bearer | 120/min |
 | `/api/client` | Client Masterfile | Bearer | 200/min |
@@ -78,7 +78,7 @@ X-EFIN: 748335
 ## Rate Limiting Policy
 
 | Tier | Requests/Min | Burst | On Exceed |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | Standard | 100 | 120 | HTTP 429 |
 | Premium | 500 | 600 | HTTP 429 |
 | Internal Service | Unlimited | N/A | N/A |
@@ -124,7 +124,7 @@ circuit_breaker:
 ### WAF Rules Active
 
 | Rule Set | Enabled | Description |
-|---|---|---|
+| --- | --- | --- |
 | OWASP CRS 3.3 | Yes | Core rule set |
 | SQL Injection | Yes | All endpoints |
 | XSS | Yes | All endpoints |

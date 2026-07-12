@@ -22,7 +22,7 @@ The Refund Tracking and Intelligence module provides end-to-end visibility into 
 ## WMR Status Mapping
 
 | WMR Status | TC Indicator | Typical Timeline | Action |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | Return Received | TC 150 posted | Day 0 | None |
 | Refund Approved | TC 846 scheduled | Day 5-10 | Notify client |
 | Refund Sent | TC 846 date reached | Day 10-21 | Confirm bank/mail |
@@ -32,7 +32,7 @@ The Refund Tracking and Intelligence module provides end-to-end visibility into 
 ## Standard Refund Timelines
 
 | Filing Method | Direct Deposit | Paper Check |
-|---|---|---|
+| --- | --- | --- |
 | e-File | 10-21 days | 4-6 weeks |
 | Paper File | 4-6 weeks | 6-8 weeks |
 | Amended (1040-X) | N/A | 8-20 weeks |
@@ -47,7 +47,7 @@ PATH Act note: EIC and ACTC refunds are held until after Feb 15 each filing seas
 ### Anomaly Detection
 
 | Anomaly | Detection Rule | Alert |
-|---|---|---|
+| --- | --- | --- |
 | Refund delayed > 21 days | TC 150 + 21 days, no TC 846 | Critical |
 | Refund frozen | TC 810 present | Critical immediate |
 | Partial refund issued | TC 846 amount < expected | Warning |
@@ -115,7 +115,7 @@ refund_tracking:
 ### Refund Risk Score Reference
 
 | Score | Risk Level | Meaning | Recommended Action |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | 0-20 | Low | Standard processing expected | Monitor normally |
 | 21-50 | Medium | Minor delay possible | Poll more frequently |
 | 51-75 | Elevated | Hold/review likely | Proactively contact IRS |
@@ -124,7 +124,7 @@ refund_tracking:
 ### Integration Points
 
 | Module | Integration |
-|---|---|
+| --- | --- |
 | IRS Tunnel | WMR status pulls and TC retrieval |
 | TC Sync Engine | Reads TC 570/571/810/811/846 |
 | Trigger Engine | Fires on status change/anomaly |

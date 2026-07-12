@@ -9,7 +9,7 @@ The MeF (Modernized e-File) module is the primary engine for federal tax return 
 ## MeF System Components
 
 | Component | Function |
-|---|---|
+| --- | --- |
 | Schema Validator | Validates XML return against IRS MeF schema |
 | Return Packager | Assembles submission ZIP (return XML + attachments) |
 | Digital Signer | Applies ERO PIN and EFIN signature |
@@ -22,7 +22,7 @@ The MeF (Modernized e-File) module is the primary engine for federal tax return 
 ## MeF Schema Versions
 
 | Tax Year | Schema Version | Status |
-|---|---|---|
+| --- | --- | --- |
 | 2025 | MeF 2025v1.0 | Current |
 | 2024 | MeF 2024v5.0 | Supported |
 | 2023 | MeF 2023v4.0 | Supported |
@@ -61,7 +61,7 @@ submission_{UUID}.zip
 ## Business Rules Validation
 
 | Rule Category | Examples |
-|---|---|
+| --- | --- |
 | Filing Status | MFS not allowed if state requires MFJ |
 | Dependent Validation | SSN must not be duplicate across returns |
 | Income Thresholds | EIC phase-out limits enforced |
@@ -72,7 +72,7 @@ submission_{UUID}.zip
 ### MeF API Endpoints (Production)
 
 | Operation | Endpoint |
-|---|---|
+| --- | --- |
 | Submit Return | POST <https://la.www4.irs.gov/a2a/> |
 | Get Acknowledgment | GET <https://la.www4.irs.gov/a2a/ack/{submissionId}> |
 | Validate Schema | Internal offline schema check |
@@ -80,7 +80,7 @@ submission_{UUID}.zip
 ### Performance Benchmarks
 
 | Metric | Target | Current |
-|---|---|---|
+| --- | --- | --- |
 | Schema validation time | < 500ms | ~320ms |
 | Package assembly time | < 2s | ~1.1s |
 | Submission to ACK (Accepted) | < 24hr | ~4-6hr avg |

@@ -9,7 +9,7 @@ The IRS Tunnel module maintains persistent, encrypted communications with IRS in
 ## Tunnel Types
 
 | Tunnel | Purpose | Protocol | IRS Endpoint |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | Transcript Delivery | Tax transcripts via TDS | HTTPS/mTLS | irs.gov/tds |
 | CAF Authorization | POA/TIA validation | HTTPS/mTLS | irs.gov/caf |
 | Account Status | Real-time account inquiry | HTTPS/mTLS | irs.gov/acct |
@@ -54,7 +54,7 @@ irs_tunnel:
 ## Transcript Request Types
 
 | Transcript Type | IRS Code | Use Case |
-|---|---|---|
+| --- | --- | --- |
 | Tax Return Transcript | TRDBV | Verify filed return |
 | Tax Account Transcript | TXACT | TC codes, payments, penalties |
 | Wage and Income Transcript | WIGE | W-2/1099 cross-reference |
@@ -64,7 +64,7 @@ irs_tunnel:
 ## CAF Authorization Levels
 
 | Level | Code | Scope |
-|---|---|---|
+| --- | --- | --- |
 | Full Representation | A | All matters |
 | Limited Representation | F | Specific tax periods |
 | Information Only | Q | Transcripts only |
@@ -85,7 +85,7 @@ irs_tunnel:
 - Certificate expiry alert threshold: 90 days
 
 | Metric | Alert Threshold | Critical Threshold |
-|---|---|---|
+| --- | --- | --- |
 | Tunnel Uptime | < 99.5% | < 99.0% |
 | Session Reconnects/hour | > 3 | > 10 |
 | Request Latency (p95) | > 2000ms | > 5000ms |

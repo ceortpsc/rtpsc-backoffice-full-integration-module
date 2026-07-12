@@ -28,7 +28,7 @@ This module handles two integrated functions:
 ### Verification Layers
 
 | Layer | Method | Required |
-|---|---|---|
+| --- | --- | --- |
 | Document Scan | Government-issued photo ID | Yes |
 | SSN/ITIN Validation | Format + IRS TDS lookup | Yes |
 | Date of Birth Match | Compare ID and intake data | Yes |
@@ -40,7 +40,7 @@ This module handles two integrated functions:
 ### Identity Scores
 
 | Score Range | Status | Action |
-|---|---|---|
+| --- | --- | --- |
 | 90-100 | Verified | Proceed |
 | 70-89 | Conditional | Additional verification step |
 | 50-69 | Uncertain | Manual review |
@@ -81,7 +81,7 @@ pii_security:
 ### Bank Product Types
 
 | Product Code | Description |
-|---|---|
+| --- | --- |
 | RT | Refund Transfer |
 | EA | Easy Advance |
 | RA | Refund Advance |

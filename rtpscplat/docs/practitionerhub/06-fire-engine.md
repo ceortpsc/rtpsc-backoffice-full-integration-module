@@ -9,7 +9,7 @@ The FIRE Engine manages electronic transmission of information returns (1099-ser
 ## Supported Information Returns
 
 | Form | Description | Deadline |
-|---|---|---|
+| --- | --- | --- |
 | 1099-NEC | Nonemployee Compensation | Jan 31 |
 | 1099-MISC | Miscellaneous Income | Feb 28 / Mar 31 (e-file) |
 | 1099-INT | Interest Income | Feb 28 / Mar 31 (e-file) |
@@ -68,7 +68,7 @@ F Record    - End of Transmitter Record
 ### FIRE Status Codes
 
 | Status | Meaning | Action |
-|---|---|---|
+| --- | --- | --- |
 | Good | All records accepted | Archive file |
 | Bad | All records rejected | Correct entire file and resubmit |
 | Mixed | Partial acceptance | Submit replacement file for bad records |
@@ -77,7 +77,7 @@ F Record    - End of Transmitter Record
 ### Seasonal Throttle Policy
 
 | Period | Max Files/Hour | Reason |
-|---|---|---|
+| --- | --- | --- |
 | Jan 1 - Mar 31 | 5 | IRS peak season |
 | Apr 1 - Dec 31 | 20 | Standard |
 

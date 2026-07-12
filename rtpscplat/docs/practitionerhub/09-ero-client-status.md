@@ -30,7 +30,7 @@ NEW_CLIENT
 ## Status Definitions
 
 | Status Code | Description | Responsible Party |
-|---|---|---|
+| --- | --- | --- |
 | `NEW_CLIENT` | Client record created | Staff |
 | `INTAKE_COMPLETE` | Intake form completed | Client |
 | `DOCUMENTS_COLLECTED` | Source docs uploaded | Client |
@@ -65,7 +65,7 @@ NEW_CLIENT
 ## SLA Targets
 
 | Stage | SLA | Alert if Exceeded |
-|---|---|---|
+| --- | --- | --- |
 | Documents to Preparation Start | 1 business day | Yes |
 | Preparation to Peer Review | 2 business days | Yes |
 | Peer Review to Client Approval | 1 business day | Yes |
@@ -77,7 +77,7 @@ NEW_CLIENT
 ## ERO Compliance Indicators
 
 | Indicator | Threshold | Action |
-|---|---|---|
+| --- | --- | --- |
 | Acceptance Rate | > 95% | Alert if below |
 | Avg Prep Time | Monitor outliers | Flag if > 14 days |
 | Client Signature Expiry | 72-hour timeout | Auto-reminder at 24/48 hours |
