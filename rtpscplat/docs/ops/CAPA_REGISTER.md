@@ -43,3 +43,14 @@
 - Preventive Action: Require migration execution evidence and mapping summary for all future RBAC changes.
 - Current Status: Closed
 - Next Action: Include validation report reference in PR merge notes.
+
+## Entry CAPA-2026-07-11-005
+
+- Unique ID: CAPA-2026-07-11-005
+- Owner: Condre Dvon Ross
+- Timestamp: 2026-07-11T00:00:00Z
+- Trigger: Operational requirement to provide executable rollout scripts for directory access controls.
+- Corrective Action: Added dedicated apply, validate, and rollout scripts with npm command bindings.
+- Preventive Action: Require executable automation scripts for future security and access-control rollouts.
+- Current Status: Closed
+- Next Action: Validate scripts in CI job once CI pipeline is updated.

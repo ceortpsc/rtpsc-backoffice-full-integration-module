@@ -16,7 +16,10 @@
     "cf:worker:deploy": "wrangler deploy --config workers/dashboard-sync/wrangler.toml",
     "cf:deploy": "npm run cf:pages:deploy && npm run cf:worker:deploy",
     "cf:enable": "node scripts/cloudflare-enable.mjs",
-    "cf:dev": "concurrently \"npm run dashboard:dev\" \"wrangler dev --config workers/dashboard-sync/wrangler.toml\""
+    "cf:dev": "concurrently \"npm run dashboard:dev\" \"wrangler dev --config workers/dashboard-sync/wrangler.toml\"",
+    "access:apply": "node scripts/access/apply-access-directory.mjs",
+    "access:validate": "node scripts/access/validate-access-directory.mjs",
+    "access:rollout": "node scripts/access/rollout-access-directory.mjs"
   },
   "devDependencies": {
     "concurrently": "^9.0.1",

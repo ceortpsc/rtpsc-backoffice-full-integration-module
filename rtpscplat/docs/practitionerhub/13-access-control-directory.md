@@ -13,6 +13,14 @@ This directory defines role-based access and integration access policy for Pract
 | `platform/security/access/rbac-integration-access-directory.yaml` | Canonical role and integration access policy for operations and audit reference |
 | `platform/db/migrations/006_role_and_integration_access_directory.sql` | Database-level role, permission, and integration access seeding |
 
+### Executable Scripts
+
+| Command | Script Path | Purpose |
+| --- | --- | --- |
+| `npm run access:apply` | `scripts/access/apply-access-directory.mjs` | Executes full migration chain including access-directory migration |
+| `npm run access:validate` | `scripts/access/validate-access-directory.mjs` | Verifies required tables, permission counts, and integration mappings |
+| `npm run access:rollout` | `scripts/access/rollout-access-directory.mjs` | Runs apply and validation as a single executable rollout |
+
 ---
 
 ## Roles and Permission Model
