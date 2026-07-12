@@ -24,3 +24,4 @@
 12. [12 - Refund Tracking and Intelligence](./12-refund-intelligence.md)
 13. [13 - Access Control Directory](./13-access-control-directory.md)
 14. [14 - Access Validation Report](./14-access-validation-report.md)
+15. [15 - Enterprise Blueprint Compendium](./15-enterprise-blueprint-compendium.md)
