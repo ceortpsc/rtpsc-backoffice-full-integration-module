@@ -23,3 +23,15 @@
 - Rollback Instruction: Revert remediation commit affecting docs/practitionerhub and docs/ops files.
 - Current Status: Ready for branch push and PR update
 - Next Action: Push remediation commit to docs/practitionerhub-suite-20260711 and update PR description with diagnostics closure.
+
+## Entry PDC-2026-07-11-003
+
+- Unique ID: PDC-2026-07-11-003
+- Owner: Condre Dvon Ross
+- Timestamp: 2026-07-11T00:00:00Z
+- Change Type: Access-control directory and integration authorization configuration.
+- High-Severity Open Issues: No
+- Compliance Gate Complete: Yes
+- Rollback Instruction: Revert commit adding migration 006 and access directory artifacts.
+- Current Status: Ready for merge and push
+- Next Action: Execute migration 006 in controlled environment and validate role access checks.

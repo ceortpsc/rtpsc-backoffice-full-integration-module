@@ -21,3 +21,14 @@
 - Preventive Action: Add markdown lint validation as a required pre-push check for documentation branches.
 - Current Status: Closed
 - Next Action: Monitor next docs PR for zero lint regressions.
+
+## Entry CAPA-2026-07-11-003
+
+- Unique ID: CAPA-2026-07-11-003
+- Owner: Condre Dvon Ross
+- Timestamp: 2026-07-11T00:00:00Z
+- Trigger: Need for explicit role-based access and integration-level authorization directory.
+- Corrective Action: Added RBAC and integration access policy artifacts in YAML and SQL migration forms.
+- Preventive Action: Require future integration onboarding to include role mapping and permission code registration.
+- Current Status: Closed
+- Next Action: Audit active users against ACCESS_* and MANAGE_INTEGRATIONS permissions.

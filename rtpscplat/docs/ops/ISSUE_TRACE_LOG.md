@@ -19,3 +19,13 @@
 - Risk: Medium. Documentation quality gate failure and release-readiness blockage until resolved.
 - Current Status: Resolved
 - Next Action: Enforce table-style lint check during docs updates before commit.
+
+## Entry ITL-2026-07-11-003
+
+- Unique ID: ITL-2026-07-11-003
+- Owner: Condre Dvon Ross
+- Timestamp: 2026-07-11T00:00:00Z
+- Finding: Role and integration access directory configuration requested for centralized RBAC governance.
+- Risk: Low. Controlled additive configuration with no destructive schema operation.
+- Current Status: Implemented
+- Next Action: Validate migration 006 on target database and verify role assignments.

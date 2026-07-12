@@ -1,0 +1,97 @@
+version: 1
+profile: production
+updated_at: 2026-07-11T00:00:00Z
+efins:
+  - "748335"
+roles:
+  - code: ERO_ADMIN
+    label: ERO Administrator
+    grants:
+      permissions:
+        - VIEW_RETURNS
+        - EDIT_RETURNS
+        - RUN_EFILE
+        - VIEW_CLIENT_PORTAL
+        - ACCESS_GATEWAY
+        - ACCESS_IRS_TUNNEL
+        - ACCESS_MEF_A2A
+        - ACCESS_FIRE_TRANSMISSION
+        - ACCESS_MEF_TRANSMISSION
+        - ACCESS_IDENTITY_VERIFICATION
+        - ACCESS_TPP_RECONCILIATION
+        - ACCESS_ERO_STATUS
+        - ACCESS_MASTERFILE
+        - ACCESS_TC_SYNC
+        - ACCESS_REFUND_INTELLIGENCE
+        - ACCESS_AUDIT_LOGS
+        - MANAGE_INTEGRATIONS
+  - code: PREPARER
+    label: Tax Preparer
+    grants:
+      permissions:
+        - VIEW_RETURNS
+        - EDIT_RETURNS
+        - RUN_EFILE
+        - ACCESS_GATEWAY
+        - ACCESS_MEF_A2A
+        - ACCESS_FIRE_TRANSMISSION
+        - ACCESS_MEF_TRANSMISSION
+        - ACCESS_IDENTITY_VERIFICATION
+        - ACCESS_ERO_STATUS
+        - ACCESS_MASTERFILE
+        - ACCESS_TC_SYNC
+        - ACCESS_REFUND_INTELLIGENCE
+  - code: AUDITOR
+    label: Compliance Auditor
+    grants:
+      permissions:
+        - VIEW_RETURNS
+        - ACCESS_GATEWAY
+        - ACCESS_IRS_TUNNEL
+        - ACCESS_TPP_RECONCILIATION
+        - ACCESS_ERO_STATUS
+        - ACCESS_MASTERFILE
+        - ACCESS_TC_SYNC
+        - ACCESS_REFUND_INTELLIGENCE
+        - ACCESS_AUDIT_LOGS
+  - code: CLIENT
+    label: Client Portal User
+    grants:
+      permissions:
+        - VIEW_CLIENT_PORTAL
+        - ACCESS_REFUND_INTELLIGENCE
+
+integrations:
+  - code: GATEWAY
+    required_permission: ACCESS_GATEWAY
+    access: role_based
+  - code: IRS_TUNNEL
+    required_permission: ACCESS_IRS_TUNNEL
+    access: role_based
+  - code: MEF_A2A
+    required_permission: ACCESS_MEF_A2A
+    access: role_based
+  - code: FIRE_TRANSMISSION
+    required_permission: ACCESS_FIRE_TRANSMISSION
+    access: role_based
+  - code: MEF_TRANSMISSION
+    required_permission: ACCESS_MEF_TRANSMISSION
+    access: role_based
+  - code: IDENTITY_VERIFY
+    required_permission: ACCESS_IDENTITY_VERIFICATION
+    access: role_based
+  - code: TPP_RECON
+    required_permission: ACCESS_TPP_RECONCILIATION
+    access: role_based
+  - code: ERO_STATUS
+    required_permission: ACCESS_ERO_STATUS
+    access: role_based
+  - code: MASTERFILE
+    required_permission: ACCESS_MASTERFILE
+    access: role_based
+  - code: TC_SYNC
+    required_permission: ACCESS_TC_SYNC
+    access: role_based
+  - code: REFUND_INTELLIGENCE
+    required_permission: ACCESS_REFUND_INTELLIGENCE
+    access: role_based
