@@ -83,3 +83,15 @@
 - Rollback Instruction: Revert commit that updates export script, package command, and docs/practitionerhub/exports artifacts.
 - Current Status: Ready for branch push and PR refresh
 - Next Action: Push branch updates and attach exported artifact list to PR notes.
+
+## Entry PDC-2026-07-12-003
+
+- Unique ID: PDC-2026-07-12-003
+- Owner: Condre Dvon Ross
+- Timestamp: 2026-07-12T00:00:00Z
+- Change Type: Primary PDF master artifact generation for Section 15 compendium.
+- High-Severity Open Issues: No
+- Compliance Gate Complete: Yes
+- Rollback Instruction: Remove generated `section15-master.pdf` and revert associated ops log updates.
+- Current Status: Completed
+- Next Action: Reference PDF artifact in PR refresh and maintain markdown volumes as source-of-truth.

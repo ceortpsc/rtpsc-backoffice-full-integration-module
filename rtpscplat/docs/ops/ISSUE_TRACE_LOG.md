@@ -69,3 +69,13 @@
 - Risk: Medium. Release evidence could be delayed without deterministic export completion.
 - Current Status: Resolved
 - Next Action: Execute standard export using markdown-first mode with explicit PDF skip flag when converter reliability is uncertain.
+
+## Entry ITL-2026-07-12-003
+
+- Unique ID: ITL-2026-07-12-003
+- Owner: Condre Dvon Ross
+- Timestamp: 2026-07-12T00:00:00Z
+- Finding: Initial direct PDF pipeline showed non-deterministic terminal behavior; PDF master artifact was eventually generated and verified.
+- Risk: Low. Artifact is present and validated; operational risk limited to renderer consistency.
+- Current Status: Closed
+- Next Action: Keep markdown export as canonical baseline and run PDF generation as a bounded post-step.

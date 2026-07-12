@@ -76,3 +76,14 @@
 - Preventive Action: Use markdown-first export as the default release gate artifact and run PDF conversion as a controlled optional step.
 - Current Status: Closed
 - Next Action: Add CI task to verify markdown export artifact completeness per release.
+
+## Entry CAPA-2026-07-12-003
+
+- Unique ID: CAPA-2026-07-12-003
+- Owner: Condre Dvon Ross
+- Timestamp: 2026-07-12T00:00:00Z
+- Trigger: Primary PDF master artifact required as a formal release deliverable for Section 15.
+- Corrective Action: Generated and validated `section15-master.pdf` under docs/practitionerhub/exports/pdf.
+- Preventive Action: Keep deterministic markdown export as gate, then perform PDF generation as a controlled artifact task with explicit validation.
+- Current Status: Closed
+- Next Action: Include PDF checksum and artifact path in release evidence bundle.
