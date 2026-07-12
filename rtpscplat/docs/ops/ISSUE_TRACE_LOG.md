@@ -99,3 +99,13 @@
 - Risk: Medium. Missing companion mappings could reduce operational precision during intake and triage.
 - Current Status: Resolved
 - Next Action: Validate appendix mappings against production registry codes during release checks.
+
+## Entry ITL-2026-07-12-006
+
+- Unique ID: ITL-2026-07-12-006
+- Owner: Condre Dvon Ross
+- Timestamp: 2026-07-12T00:00:00Z
+- Finding: Standalone PDF artifact for Section 17 was required to complete the export set for the blueprint and appendix series.
+- Risk: Low. Missing standalone appendix PDF would reduce publication completeness, but does not affect source-of-truth markdown controls.
+- Current Status: Resolved
+- Next Action: Include Section 17 artifact inventory in PR review notes.

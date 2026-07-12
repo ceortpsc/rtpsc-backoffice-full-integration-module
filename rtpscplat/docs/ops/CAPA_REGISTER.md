@@ -109,3 +109,14 @@
 - Preventive Action: Require mapping-table coverage checks for all major notice families before policy release approval.
 - Current Status: Closed
 - Next Action: Add automated registry-to-appendix consistency validation in release checks.
+
+## Entry CAPA-2026-07-12-006
+
+- Unique ID: CAPA-2026-07-12-006
+- Owner: Condre Dvon Ross
+- Timestamp: 2026-07-12T00:00:00Z
+- Trigger: Need to complete the standalone export set with an appendix-specific PDF deliverable.
+- Corrective Action: Generated `section17-master.md` and `section17-master.pdf` in the PractitionerHub exports directories.
+- Preventive Action: Add appendix-export coverage to the documentation release checklist so every published volume has matching markdown and PDF artifacts.
+- Current Status: Closed
+- Next Action: Extend export automation to cover Section 17 directly.

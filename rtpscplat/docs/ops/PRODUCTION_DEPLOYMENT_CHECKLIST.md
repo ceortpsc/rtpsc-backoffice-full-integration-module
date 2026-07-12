@@ -119,3 +119,15 @@
 - Rollback Instruction: Revert commit containing Section 17 appendix and Section 16 export artifacts.
 - Current Status: Ready for branch push
 - Next Action: Push to docs/practitionerhub-suite-20260711 and attach artifact inventory in PR notes.
+
+## Entry PDC-2026-07-12-006
+
+- Unique ID: PDC-2026-07-12-006
+- Owner: Condre Dvon Ross
+- Timestamp: 2026-07-12T00:00:00Z
+- Change Type: Standalone Section 17 appendix export artifact publication.
+- High-Severity Open Issues: No
+- Compliance Gate Complete: Yes
+- Rollback Instruction: Remove generated `section17-master.md` and `section17-master.pdf` and revert associated ops log updates.
+- Current Status: Ready for branch push
+- Next Action: Push final appendix artifacts and refresh PR artifact inventory.
