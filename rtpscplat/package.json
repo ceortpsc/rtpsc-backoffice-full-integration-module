@@ -19,7 +19,8 @@
     "cf:dev": "concurrently \"npm run dashboard:dev\" \"wrangler dev --config workers/dashboard-sync/wrangler.toml\"",
     "access:apply": "node scripts/access/apply-access-directory.mjs",
     "access:validate": "node scripts/access/validate-access-directory.mjs",
-    "access:rollout": "node scripts/access/rollout-access-directory.mjs"
+    "access:rollout": "node scripts/access/rollout-access-directory.mjs",
+    "docs:export:section15": "node scripts/docs/export-section15-volumes.mjs"
   },
   "devDependencies": {
     "concurrently": "^9.0.1",

@@ -59,3 +59,13 @@
 - Risk: Low. Documentation expansion only.
 - Current Status: Resolved
 - Next Action: Use compendium as canonical PDF source and update references per release cycle.
+
+## Entry ITL-2026-07-12-002
+
+- Unique ID: ITL-2026-07-12-002
+- Owner: Condre Dvon Ross
+- Timestamp: 2026-07-12T00:00:00Z
+- Finding: Section 15 export command intermittently stalled during PDF conversion path, obscuring completion status.
+- Risk: Medium. Release evidence could be delayed without deterministic export completion.
+- Current Status: Resolved
+- Next Action: Execute standard export using markdown-first mode with explicit PDF skip flag when converter reliability is uncertain.

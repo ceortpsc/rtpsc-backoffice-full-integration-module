@@ -65,3 +65,14 @@
 - Preventive Action: Require future major architecture updates to maintain equation labels, reference integrity, and volume export plan consistency.
 - Current Status: Closed
 - Next Action: Include compendium review in architecture governance cadence.
+
+## Entry CAPA-2026-07-12-002
+
+- Unique ID: CAPA-2026-07-12-002
+- Owner: Condre Dvon Ross
+- Timestamp: 2026-07-12T00:00:00Z
+- Trigger: Export pipeline produced ambiguous runtime behavior when PDF conversion tools were unavailable or stalled.
+- Corrective Action: Updated export automation to support explicit PDF-skip mode and bounded PDF conversion timeout.
+- Preventive Action: Use markdown-first export as the default release gate artifact and run PDF conversion as a controlled optional step.
+- Current Status: Closed
+- Next Action: Add CI task to verify markdown export artifact completeness per release.
