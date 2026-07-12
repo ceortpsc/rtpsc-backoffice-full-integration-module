@@ -119,3 +119,13 @@
 - Risk: Medium. Partial publication set weakens distribution completeness and reproducibility for audit and governance use.
 - Current Status: Resolved
 - Next Action: Use the full-suite export automation as the standard publication path for future releases.
+
+## Entry ITL-2026-07-12-008
+
+- Unique ID: ITL-2026-07-12-008
+- Owner: Condre Dvon Ross
+- Timestamp: 2026-07-12T00:00:00Z
+- Finding: Release inventory and checksum evidence were not yet consolidated into a formal manifest, and direct PR note refresh remained blocked by missing GitHub CLI/authentication.
+- Risk: Low. Publication artifacts exist, but reviewer communication and evidence packaging would be less efficient without a manifest and notes draft.
+- Current Status: Resolved
+- Next Action: Use the committed PR notes draft to refresh PR notes manually until authenticated automation is available.

@@ -131,3 +131,14 @@
 - Preventive Action: Require the full-suite publication export command to pass before documentation branch release sign-off.
 - Current Status: Closed
 - Next Action: Integrate publication artifact verification into release checks.
+
+## Entry CAPA-2026-07-12-008
+
+- Unique ID: CAPA-2026-07-12-008
+- Owner: Condre Dvon Ross
+- Timestamp: 2026-07-12T00:00:00Z
+- Trigger: Need for formal publication evidence packaging and reviewer-ready PR inventory notes.
+- Corrective Action: Added a release manifest with SHA-256 checksums and a committed PR notes draft covering the full publication inventory.
+- Preventive Action: Include manifest generation and PR notes drafting in the standard publication workflow.
+- Current Status: Closed
+- Next Action: Automate PR body refresh once authenticated GitHub tooling is available.
