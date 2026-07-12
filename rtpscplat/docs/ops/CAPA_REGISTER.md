@@ -87,3 +87,25 @@
 - Preventive Action: Keep deterministic markdown export as gate, then perform PDF generation as a controlled artifact task with explicit validation.
 - Current Status: Closed
 - Next Action: Include PDF checksum and artifact path in release evidence bundle.
+
+## Entry CAPA-2026-07-12-004
+
+- Unique ID: CAPA-2026-07-12-004
+- Owner: Condre Dvon Ross
+- Timestamp: 2026-07-12T00:00:00Z
+- Trigger: Need for a single authoritative blueprint that unifies legal guidance, architecture controls, AI constraints, and ERO operating procedures.
+- Corrective Action: Published Section 16 with layered architecture, formal governance, workflow controls, rule engine model, and compliance-centered technical standards.
+- Preventive Action: Require future feature proposals to map to Section 16 layers, rule authorities, and operational control objectives before implementation approval.
+- Current Status: Closed
+- Next Action: Add Section 16 conformance checklist to release planning workflow.
+
+## Entry CAPA-2026-07-12-005
+
+- Unique ID: CAPA-2026-07-12-005
+- Owner: Condre Dvon Ross
+- Timestamp: 2026-07-12T00:00:00Z
+- Trigger: Need to operationalize Section 16 with export artifacts and detailed notice-family mapping companion tables.
+- Corrective Action: Published Section 16 master export and created Section 17 appendix with CP/LTR/Form mapping matrices.
+- Preventive Action: Require mapping-table coverage checks for all major notice families before policy release approval.
+- Current Status: Closed
+- Next Action: Add automated registry-to-appendix consistency validation in release checks.

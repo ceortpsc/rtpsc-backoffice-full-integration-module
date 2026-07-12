@@ -25,3 +25,5 @@
 13. [13 - Access Control Directory](./13-access-control-directory.md)
 14. [14 - Access Validation Report](./14-access-validation-report.md)
 15. [15 - Enterprise Blueprint Compendium](./15-enterprise-blueprint-compendium.md)
+16. [16 - IRS Response Platform Blueprint](./16-irs-response-platform-blueprint.md)
+17. [17 - Notice Family Mapping Appendix](./17-notice-family-mapping-appendix.md)

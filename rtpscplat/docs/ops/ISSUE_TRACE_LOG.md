@@ -79,3 +79,23 @@
 - Risk: Low. Artifact is present and validated; operational risk limited to renderer consistency.
 - Current Status: Closed
 - Next Action: Keep markdown export as canonical baseline and run PDF generation as a bounded post-step.
+
+## Entry ITL-2026-07-12-004
+
+- Unique ID: ITL-2026-07-12-004
+- Owner: Condre Dvon Ross
+- Timestamp: 2026-07-12T00:00:00Z
+- Finding: Requirement issued for exhaustive IRS form and letter response ecosystem blueprint spanning compliance, architecture, operations, AI governance, and technical implementation assets.
+- Risk: Medium. Incomplete mapping could create policy ambiguity or implementation drift.
+- Current Status: Resolved
+- Next Action: Perform governance review pass and replace placeholder citations with finalized authorities.
+
+## Entry ITL-2026-07-12-005
+
+- Unique ID: ITL-2026-07-12-005
+- Owner: Condre Dvon Ross
+- Timestamp: 2026-07-12T00:00:00Z
+- Finding: Requirement to publish print-ready Section 16 artifacts and provide expanded notice-family mapping tables for CP, LTR, and form-by-form routing.
+- Risk: Medium. Missing companion mappings could reduce operational precision during intake and triage.
+- Current Status: Resolved
+- Next Action: Validate appendix mappings against production registry codes during release checks.
