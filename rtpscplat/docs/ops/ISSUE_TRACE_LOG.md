@@ -139,3 +139,23 @@
 - Risk: Medium. Core dashboard and ops runtime are live, but provider-backed AI completion returns controlled `AI_PROVIDER_NOT_CONFIGURED` until secrets are injected.
 - Current Status: Implemented with configuration dependency
 - Next Action: Set provider credentials and rerun `scripts/validate-ai-runtime.mjs` to confirm successful completion responses.
+
+## Entry ITL-2026-07-13-001
+
+- Unique ID: ITL-2026-07-13-001
+- Owner: Condre Dvon Ross
+- Timestamp: 2026-07-13T00:00:00Z
+- Finding: Dashboard lacked a direct operator surface for MFA-gated AI assist and AI audit retrieval, limiting practical verification of the authenticated provider endpoints.
+- Risk: Medium. Without an integrated console, operators rely on ad hoc scripts and cannot rapidly validate endpoint behavior during runtime checks.
+- Current Status: Resolved
+- Next Action: Validate console flow against live backend while provider secret is configured in runtime environment.
+
+## Entry ITL-2026-07-13-002
+
+- Unique ID: ITL-2026-07-13-002
+- Owner: Condre Dvon Ross
+- Timestamp: 2026-07-13T00:00:00Z
+- Finding: AI console lacked one-click common task execution and required repeated credential re-entry after refresh; dashboard naming did not reflect eFile and MEF transmission platform scope.
+- Risk: Medium. Operator friction slows incident response and weakens interface fidelity with platform mission and controls.
+- Current Status: Resolved
+- Next Action: Validate quick actions and session restoration in runtime smoke checks.

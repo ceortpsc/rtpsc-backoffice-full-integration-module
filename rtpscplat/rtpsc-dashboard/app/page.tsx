@@ -3,8 +3,13 @@ import Link from 'next/link';
 const actions = [
     {
         title: 'Open Operations Dashboard',
-        note: 'Live case, transmission, and compliance telemetry.',
+        note: 'Live MEF transmission, refund intelligence, and compliance telemetry.',
         href: '/dashboard'
+    },
+    {
+        title: 'Launch AI Notice Response Console',
+        note: 'Run IRM-guided response strategies for CP and LTR notices with MFA-protected audit trails.',
+        href: '/dashboard/ai-console'
     },
     {
         title: 'Review Filing Case Queue',
@@ -37,11 +42,11 @@ export default function HomePage() {
     return (
         <section className="page-shell">
             <header className="page-header home-header">
-                <p className="eyebrow">RTP ENTERPRISE COMMAND SURFACE</p>
-                <h1>Production Filing and Clearing Operations</h1>
+                <p className="eyebrow">VANTAGE AVALON TRANSMISSION COMMAND SURFACE</p>
+                <h1>eFile Transmission, Notice Response, and Reconciliation Operations</h1>
                 <p>
-                    Unified Next.js operations front end with seeded production-grade backend telemetry routes for ERO case
-                    management, transmission control, and custodial reconciliation.
+                    Unified operations front end for MEF transmission monitoring, IRM-aligned CP and LTR response generation,
+                    refund intelligence, balanced ledger controls, and advanced AI-enabled processing.
                 </p>
             </header>
 

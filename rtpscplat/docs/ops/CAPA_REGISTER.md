@@ -153,3 +153,25 @@
 - Preventive Action: Keep dashboard source under committed route/API modules and validate runtime with `access:rollout`, `dashboard:build`, and `validate-ai-runtime.mjs` before release promotion.
 - Current Status: Closed
 - Next Action: Add secret-management workflow for AI provider credentials in deployment environments.
+
+## Entry CAPA-2026-07-13-001
+
+- Unique ID: CAPA-2026-07-13-001
+- Owner: Condre Dvon Ross
+- Timestamp: 2026-07-13T00:00:00Z
+- Trigger: Need a production-usable dashboard control point for authenticated AI invocation and audit evidence retrieval.
+- Corrective Action: Added AI console UI and Next.js API proxy routes for assist and audit endpoints to ensure browser-safe access without CORS failures.
+- Preventive Action: Require new secured backend endpoints to include an operator console path or equivalent validated UI integration before release handoff.
+- Current Status: Closed
+- Next Action: Include AI console checks in release smoke test steps for dashboard workflows.
+
+## Entry CAPA-2026-07-13-002
+
+- Unique ID: CAPA-2026-07-13-002
+- Owner: Condre Dvon Ross
+- Timestamp: 2026-07-13T00:00:00Z
+- Trigger: Need faster operator execution for recurring AI tasks and stable credential handling across refresh while preserving masked inputs.
+- Corrective Action: Added quick action buttons for common task templates and sessionStorage-backed credential restoration with masked password input behavior.
+- Preventive Action: Require dashboard operator surfaces to include quick task templates and refresh-safe state persistence for high-frequency secure workflows.
+- Current Status: Closed
+- Next Action: Add quick-action coverage to dashboard regression checks.

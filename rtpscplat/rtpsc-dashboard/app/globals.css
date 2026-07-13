@@ -48,10 +48,11 @@ a {
     display: flex;
     gap: 1.2rem;
     justify-content: space-between;
-    align-items: end;
+    align-items: flex-end;
     padding: 1rem 1.25rem;
     border-bottom: 1px solid var(--line);
     background: rgba(244, 246, 251, 0.94);
+    -webkit-backdrop-filter: blur(8px);
     backdrop-filter: blur(8px);
 }
 
@@ -248,4 +249,117 @@ tbody tr:hover {
     .site-nav {
         justify-content: start;
     }
+}
+
+.ai-console-grid,
+.ai-result-grid {
+    display: grid;
+    gap: 0.9rem;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+}
+
+.ai-card {
+    border: 1px solid var(--line);
+    border-radius: 0.9rem;
+    background: var(--card);
+    padding: 0.95rem;
+    display: grid;
+    gap: 0.7rem;
+}
+
+.ai-card h2 {
+    margin: 0;
+    color: var(--brand-strong);
+}
+
+.ai-card label {
+    display: grid;
+    gap: 0.35rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.ai-card input,
+.ai-card textarea {
+    width: 100%;
+    border: 1px solid var(--line);
+    border-radius: 0.5rem;
+    padding: 0.55rem 0.6rem;
+    font: inherit;
+    color: var(--ink-900);
+    background: #ffffff;
+}
+
+.ai-card textarea {
+    resize: vertical;
+}
+
+.ai-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+}
+
+.quick-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+}
+
+.quick-actions button {
+    border: 1px solid var(--line);
+    border-radius: 0.55rem;
+    background: #f4fbff;
+    color: var(--ink-900);
+    padding: 0.42rem 0.65rem;
+    font-size: 0.84rem;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.quick-actions button:hover:not(:disabled) {
+    border-color: var(--brand);
+    color: var(--brand-strong);
+}
+
+.quick-actions button:disabled {
+    opacity: 0.7;
+    cursor: wait;
+}
+
+.ai-actions button {
+    border: 1px solid transparent;
+    border-radius: 0.55rem;
+    background: var(--brand);
+    color: #ffffff;
+    padding: 0.45rem 0.72rem;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.ai-actions button:hover:not(:disabled) {
+    background: var(--brand-strong);
+}
+
+.ai-actions button:disabled {
+    opacity: 0.7;
+    cursor: wait;
+}
+
+.status-line {
+    margin: 0;
+    color: var(--ink-700);
+    font-weight: 600;
+}
+
+.ai-card pre {
+    margin: 0;
+    background: #0d223f;
+    color: #d7ecff;
+    border-radius: 0.7rem;
+    padding: 0.8rem;
+    overflow: auto;
+    max-height: 420px;
+    font-size: 0.78rem;
 }

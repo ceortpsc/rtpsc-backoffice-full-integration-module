@@ -4,6 +4,7 @@ import { getSummary } from '@/lib/data';
 const summary = getSummary();
 
 const cards = [
+    { label: 'Authenticated AI Console', value: 'Live', route: '/dashboard/ai-console' },
     { label: 'Open Cases', value: summary.openCases, route: '/dashboard/cases' },
     { label: 'Critical Cases', value: summary.criticalCases, route: '/dashboard/cases' },
     { label: 'Accepted Transmissions', value: summary.acceptedTransmissions, route: '/dashboard/transmissions' },
@@ -17,10 +18,10 @@ export default function DashboardPage() {
     return (
         <section className="page-shell">
             <header className="page-header">
-                <p className="eyebrow">RTP CONTROL TOWER</p>
-                <h1>Operations Dashboard</h1>
+                <p className="eyebrow">VANTAGE AVALON EFILE COMMAND</p>
+                <h1>MEF Transmission and Refund Intelligence Dashboard</h1>
                 <p>
-                    Unified case control, transmission telemetry, compliance evidence, and custodial reconciliation.
+                    Unified MEF telemetry, CP and LTR response orchestration, compliance controls, and balanced ledger variance reconciliation.
                 </p>
             </header>
 

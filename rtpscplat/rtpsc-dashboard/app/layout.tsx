@@ -3,8 +3,8 @@ import Link from 'next/link';
 import './globals.css';
 
 export const metadata: Metadata = {
-    title: 'Ross Tax Pro Control Platform',
-    description: 'Production operations and compliance dashboard for RTP filing and clearing'
+    title: 'Vantage Avalon eFile Transmission Platform',
+    description: 'MEF transmission, refund intelligence, variance reconciliation, IRM notice response, and compliance operations control platform'
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -14,12 +14,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 <div className="site-shell">
                     <header className="site-header">
                         <div>
-                            <p className="brand-mark">VANTAGE AVALON DBMS</p>
-                            <h1>Ross Tax Pro Control Platform</h1>
+                            <p className="brand-mark">VANTAGE AVALON EFILE PLATFORM</p>
+                            <h1>eFile Transmission and Compliance Operations</h1>
                         </div>
                         <nav className="site-nav" aria-label="Primary">
                             <Link href="/">Home</Link>
                             <Link href="/dashboard">Dashboard</Link>
+                            <Link href="/dashboard/ai-console">AI Console</Link>
                             <Link href="/dashboard/cases">Cases</Link>
                             <Link href="/dashboard/transmissions">Transmissions</Link>
                             <Link href="/dashboard/reconciliation">Reconciliation</Link>
