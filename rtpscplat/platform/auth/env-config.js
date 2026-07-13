@@ -12,6 +12,13 @@ function getEnvConfig() {
       creditalAdminPassword: process.env.SBTPG_CREDITAIL_ADMIN_PASSWORD || 'Houston1!',
       environment: process.env.SBTPG_ENVIRONMENT || 'development',
       syncMode: process.env.SBTPG_SYNC_MODE || 'manual'
+    },
+    ai: {
+      provider: process.env.AI_PROVIDER || 'openai-compatible',
+      baseUrl: process.env.AI_BASE_URL || 'https://api.openai.com/v1',
+      apiKey: process.env.AI_API_KEY || process.env.OPENAI_API_KEY || '',
+      model: process.env.AI_MODEL || 'gpt-4o-mini',
+      temperature: Number(process.env.AI_TEMPERATURE || '0.2')
     }
   };
 

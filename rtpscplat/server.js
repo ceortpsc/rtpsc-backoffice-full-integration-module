@@ -12,6 +12,7 @@ const {
   scoreRisk,
   scanDocuments
 } = require('./platform/ai/engine');
+const { requestAiCompletion, summarizeRequest } = require('./platform/ai/provider-service');
 const { buildComplianceOverview, buildComplianceExportBundle } = require('./platform/compliance/engine');
 const { buildTaxpayerConsentBundle } = require('./platform/compliance/consents');
 const { buildRedactionWorkflow, buildPublicationComplianceBundle } = require('./platform/compliance/redaction');
@@ -28,8 +29,15 @@ const { createBackgroundWorkflow } = require('./platform/compliance/background-w
 const { createAutomationScheduler } = require('./platform/automation/scheduler');
 const { createTaskManager } = require('./platform/automation/task-manager');
 const { getEnvConfig } = require('./platform/auth/env-config');
-const { registerMfaEnrollment, enableMfaEnrollment, verifyMfaChallenge, validateCredentialAccess } = require('./platform/auth/service');
+const {
+  registerMfaEnrollment,
+  enableMfaEnrollment,
+  verifyMfaChallenge,
+  validateCredentialAccess,
+  validateCredentialAccessWithMfa
+} = require('./platform/auth/service');
 const { getCloudflareRobotConfig, validateCloudflareRobotToken } = require('./platform/auth/cloudflare-robot');
+const { createAiAuditLog, listAiAuditLogs } = require('./platform/audit/ai-audit-log');
 const { buildIrsTaxProIntegration, buildIrsFormPacket, buildTransmissionValidationBundle } = require('./platform/irs/service');
 const { listEsamApplications, getEsamApplicationSummary, getEsamOperationalReadiness } = require('./platform/irs/esam-service');
 const {
@@ -58,8 +66,14 @@ const {
 const { buildPrefilePaymentGate, buildFinanceReconciliationTools } = require('./platform/finance/payment-gateway');
 const { listServices, searchServices } = require('./platform/finance/services-catalog');
 
-const PORT = 8080;
+const PORT = Number(process.env.PORT || 8080);
 const DB_FILE = path.join(__dirname, 'ross_tax_pro.db');
+
+function closeDb(db) {
+  if (db && typeof db.close === 'function') {
+    db.close();
+  }
+}
 
 function sendJson(res, body, statusCode = 200) {
   res.writeHead(statusCode, { 'Content-Type': 'application/json' });
@@ -169,6 +183,182 @@ const server = http.createServer(async (req, res) => {
       sendJson(res, result);
     } catch (error) {
       sendJson(res, { error: error.message }, 400);
+    }
+    return;
+  }
+
+  if (req.url === '/api/ai/search-bank-products' && req.method === 'POST') {
+    try {
+      const body = await parseBody(req);
+      sendJson(res, searchBankProducts(body));
+    } catch (error) {
+      sendJson(res, { error: error.message }, 400);
+    }
+    return;
+  }
+
+  if (req.url === '/api/ai/provider/assist' && req.method === 'POST') {
+    let db;
+    let body = {};
+    try {
+      body = await parseBody(req);
+      db = new sqlite3.Database(DB_FILE);
+      const access = await validateCredentialAccessWithMfa(db, body.credentials || {}, 'USE_AI_ASSIST');
+      if (!access.ok) {
+        sendJson(res, { error: 'ROLE_BASED_ACCESS_DENIED', access }, 403);
+        return;
+      }
+
+      const completion = await requestAiCompletion({
+        prompt: body.prompt,
+        systemPrompt: body.systemPrompt,
+        context: body.context,
+        taskType: body.taskType,
+        temperature: body.temperature
+      });
+
+      await createAiAuditLog(db, {
+        userId: access.user.id,
+        username: access.user.username,
+        permissionCode: access.permissionCode,
+        provider: completion.provider,
+        model: completion.model,
+        route: '/api/ai/provider/assist',
+        requestSummary: summarizeRequest(body),
+        responseStatus: 'SUCCESS',
+        metadata: {
+          taskType: body.taskType || 'general_assist',
+          usage: completion.usage,
+          finishReason: completion.finishReason,
+          completionId: completion.completionId
+        }
+      });
+
+      sendJson(res, { access, completion });
+    } catch (error) {
+      if (db) {
+        await createAiAuditLog(db, {
+          username: body?.credentials?.username || 'unknown',
+          permissionCode: 'USE_AI_ASSIST',
+          provider: getEnvConfig().ai.provider,
+          model: getEnvConfig().ai.model,
+          route: '/api/ai/provider/assist',
+          requestSummary: summarizeRequest(body),
+          responseStatus: 'ERROR',
+          metadata: { error: error.message }
+        }).catch(() => undefined);
+      }
+      sendJson(res, { error: error.message }, error.message === 'AI_PROVIDER_NOT_CONFIGURED' ? 503 : 400);
+    } finally {
+      closeDb(db);
+    }
+    return;
+  }
+
+  if (req.url === '/api/ai/provider/notice-response' && req.method === 'POST') {
+    let db;
+    let body = {};
+    try {
+      body = await parseBody(req);
+      db = new sqlite3.Database(DB_FILE);
+      const access = await validateCredentialAccessWithMfa(db, body.credentials || {}, 'USE_AI_ASSIST');
+      if (!access.ok) {
+        sendJson(res, { error: 'ROLE_BASED_ACCESS_DENIED', access }, 403);
+        return;
+      }
+
+      const prompt = [
+        `Draft an audit-ready response strategy for IRS notice ${body.noticeCode || 'UNKNOWN'}.`,
+        `Taxpayer: ${body.taxpayerName || 'Unknown taxpayer'}.`,
+        `Tax year: ${body.taxYear || 'Unknown'}.`,
+        `Facts: ${body.factsSummary || 'No facts summary provided.'}`,
+        `Requested relief: ${body.requestedRelief || 'Not specified.'}`,
+        'Return a strategy summary, evidence checklist, and reviewer cautions.'
+      ].join(' ');
+
+      const completion = await requestAiCompletion({
+        prompt,
+        systemPrompt: body.systemPrompt,
+        context: {
+          noticeCode: body.noticeCode,
+          taxpayerName: body.taxpayerName,
+          taxYear: body.taxYear,
+          requestedRelief: body.requestedRelief
+        },
+        taskType: 'notice_response_strategy',
+        temperature: body.temperature
+      });
+
+      await createAiAuditLog(db, {
+        userId: access.user.id,
+        username: access.user.username,
+        permissionCode: access.permissionCode,
+        provider: completion.provider,
+        model: completion.model,
+        route: '/api/ai/provider/notice-response',
+        requestSummary: summarizeRequest({ taskType: 'notice_response_strategy', prompt }),
+        responseStatus: 'SUCCESS',
+        metadata: {
+          noticeCode: body.noticeCode || null,
+          taxYear: body.taxYear || null,
+          usage: completion.usage,
+          completionId: completion.completionId
+        }
+      });
+
+      sendJson(res, { access, completion });
+    } catch (error) {
+      if (db) {
+        await createAiAuditLog(db, {
+          username: body?.credentials?.username || 'unknown',
+          permissionCode: 'USE_AI_ASSIST',
+          provider: getEnvConfig().ai.provider,
+          model: getEnvConfig().ai.model,
+          route: '/api/ai/provider/notice-response',
+          requestSummary: summarizeRequest(body),
+          responseStatus: 'ERROR',
+          metadata: { error: error.message, noticeCode: body.noticeCode || null }
+        }).catch(() => undefined);
+      }
+      sendJson(res, { error: error.message }, error.message === 'AI_PROVIDER_NOT_CONFIGURED' ? 503 : 400);
+    } finally {
+      closeDb(db);
+    }
+    return;
+  }
+
+  if (requestUrl.pathname === '/api/ai/provider/audit' && req.method === 'GET') {
+    let db;
+    try {
+      db = new sqlite3.Database(DB_FILE);
+      const access = await validateCredentialAccessWithMfa(
+        db,
+        {
+          username: requestUrl.searchParams.get('username') || '',
+          password: requestUrl.searchParams.get('password') || '',
+          mfaToken: requestUrl.searchParams.get('mfaToken') || '',
+          backupCode: requestUrl.searchParams.get('backupCode') || ''
+        },
+        'ACCESS_AI_AUDIT_LOGS'
+      );
+
+      if (!access.ok) {
+        sendJson(res, { error: 'ROLE_BASED_ACCESS_DENIED', access }, 403);
+        return;
+      }
+
+      const logs = await listAiAuditLogs(db, requestUrl.searchParams.get('limit') || 50);
+      sendJson(res, {
+        access,
+        logs: logs.map((item) => ({
+          ...item,
+          metadata: item.metadata_json ? JSON.parse(item.metadata_json) : {}
+        }))
+      });
+    } catch (error) {
+      sendJson(res, { error: error.message }, 400);
+    } finally {
+      closeDb(db);
     }
     return;
   }

@@ -10,9 +10,9 @@ const repoRoot = path.resolve(__dirname, '..', '..');
 const dbPath = path.join(repoRoot, 'ross_tax_pro.db');
 
 const expectedPermissionCounts = {
-    ERO_ADMIN: 17,
-    PREPARER: 11,
-    AUDITOR: 10,
+    ERO_ADMIN: 19,
+    PREPARER: 12,
+    AUDITOR: 11,
     CLIENT: 2
 };
 

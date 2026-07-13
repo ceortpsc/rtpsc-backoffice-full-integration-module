@@ -166,7 +166,12 @@ function verifyMfaChallenge(input = {}) {
   const userId = input.userId;
   const token = input.token;
   const backupCode = String(input.backupCode || '').trim().toUpperCase();
-  const enrollment = [...mfaEnrollments.values()].find((entry) => entry.userId === userId && entry.enabled);
+  const enrollmentId = String(input.enrollmentId || '').trim();
+  const enrollment = enrollmentId
+    ? mfaEnrollments.get(enrollmentId)
+    : [...mfaEnrollments.values()]
+      .filter((entry) => entry.userId === userId && entry.enabled)
+      .sort((left, right) => String(right.enabledAt || '').localeCompare(String(left.enabledAt || '')))[0];
   if (!enrollment) {
     return { ok: false, reason: 'MFA_NOT_ENABLED' };
   }
@@ -307,12 +312,71 @@ async function validateCredentialAccess(db, credentials = {}, permissionCode = '
   };
 }
 
+async function validateCredentialAccessWithMfa(db, credentials = {}, permissionCode = 'USE_AI_ASSIST') {
+  const username = String(credentials.username || '').trim();
+  const password = String(credentials.password || '').trim();
+
+  if (!username || !password) {
+    return { ok: false, reason: 'CREDENTIALS_REQUIRED' };
+  }
+
+  let authResult = await authenticateUser(db, username, password, { ownerTable: 'owner_credentials' });
+  let role = 'OWNER_ADMIN';
+
+  if (!authResult.ok) {
+    authResult = await authenticateUser(db, username, password);
+    role = 'ROLE_GRANTED';
+  }
+
+  if (!authResult.ok) {
+    return { ok: false, reason: 'INVALID_CREDENTIALS' };
+  }
+
+  const mfaChallenge = verifyMfaChallenge({
+    userId: authResult.user.id,
+    enrollmentId: credentials.enrollmentId,
+    token: credentials.mfaToken,
+    backupCode: credentials.backupCode
+  });
+
+  if (!mfaChallenge.ok) {
+    return {
+      ok: false,
+      reason: mfaChallenge.reason,
+      permissionCode,
+      user: authResult.user
+    };
+  }
+
+  if (role !== 'OWNER_ADMIN') {
+    const allowed = await checkPermission(db, authResult.user.id, permissionCode);
+    if (!allowed) {
+      return {
+        ok: false,
+        reason: 'PERMISSION_DENIED',
+        permissionCode,
+        user: authResult.user
+      };
+    }
+  }
+
+  return {
+    ok: true,
+    role,
+    permissionCode,
+    credentialValidated: true,
+    mfaMethod: mfaChallenge.method,
+    user: authResult.user
+  };
+}
+
 module.exports = {
   createDbConnection,
   authenticateUser,
   checkPermission,
   createClientFile,
   validateCredentialAccess,
+  validateCredentialAccessWithMfa,
   registerMfaEnrollment,
   enableMfaEnrollment,
   verifyMfaChallenge

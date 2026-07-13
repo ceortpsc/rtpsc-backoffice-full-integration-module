@@ -10,6 +10,8 @@
     "dashboard:install": "npm install --prefix rtpsc-dashboard",
     "dashboard:dev": "npm run dev --prefix rtpsc-dashboard",
     "dashboard:build": "npm run build --prefix rtpsc-dashboard",
+    "ops:live:start": "node scripts/ops-live-runtime.mjs",
+    "workers:supervisor": "node scripts/worker-supervisor.mjs",
     "cf:sync": "node scripts/cloudflare-sync.mjs",
     "cf:pages:deploy": "node scripts/cloudflare-pages-deploy.mjs",
     "cf:pages:domain": "node scripts/cloudflare-pages-domain.mjs",
